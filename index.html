@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITEM Reports Hub</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: linear-gradient(135deg, #0f1419 0%, #1a252f 50%, #0d1117 100%);
+  color: #e6edf3; min-height: 100vh; padding: 32px 24px 60px;
+}
+.container { max-width: 1100px; margin: 0 auto; }
+
+/* Header */
+.header { text-align: center; margin-bottom: 48px; padding-bottom: 28px; border-bottom: 1px solid rgba(255,255,255,.1); }
+.header .logo { font-size: 13px; font-weight: 700; letter-spacing: 3px; color: #58a6ff; text-transform: uppercase; margin-bottom: 16px; }
+.header h1 { font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 10px; }
+.header .sub { color: #8b949e; font-size: 14px; }
+.header .badges { display: flex; justify-content: center; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.badge { font-size: 11px; padding: 4px 12px; border-radius: 99px; font-weight: 600; }
+.badge.green { background: rgba(63,185,80,.15); color: #3fb950; border: 1px solid rgba(63,185,80,.3); }
+.badge.blue  { background: rgba(88,166,255,.15); color: #58a6ff; border: 1px solid rgba(88,166,255,.3); }
+.badge.purple{ background: rgba(163,113,247,.15); color: #a371f7; border: 1px solid rgba(163,113,247,.3); }
+
+/* Section title */
+.sec-title {
+  font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: #8b949e; margin: 40px 0 16px; display: flex; align-items: center; gap: 10px;
+}
+.sec-title::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.1); }
+
+/* Cards grid */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+
+/* Report card */
+.card {
+  background: linear-gradient(145deg, rgba(22,27,34,.95), rgba(13,17,23,.95));
+  border: 1px solid rgba(255,255,255,.08); border-radius: 12px;
+  padding: 20px; text-decoration: none; color: inherit;
+  transition: all .2s; display: flex; flex-direction: column; gap: 10px;
+  cursor: pointer;
+}
+.card:hover { border-color: rgba(88,166,255,.4); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.card-icon { font-size: 24px; flex-shrink: 0; }
+.card-tag { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+.tag-wms    { background: rgba(88,166,255,.2); color: #58a6ff; }
+.tag-report { background: rgba(63,185,80,.2);  color: #3fb950; }
+.tag-plan   { background: rgba(163,113,247,.2);color: #a371f7; }
+.tag-weekly { background: rgba(210,153,34,.2); color: #d29922; }
+.tag-bi     { background: rgba(57,208,214,.2); color: #39d0d6; }
+.card-title { font-size: 15px; font-weight: 700; color: #e6edf3; line-height: 1.4; }
+.card-desc  { font-size: 12px; color: #8b949e; line-height: 1.6; flex: 1; }
+.card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+.card-date { font-size: 11px; color: #484f58; }
+.card-arrow { font-size: 12px; color: #58a6ff; font-weight: 600; opacity: 0; transition: opacity .2s; }
+.card:hover .card-arrow { opacity: 1; }
+
+/* Updated dot */
+.updated { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #3fb950; margin-right: 5px; vertical-align: middle; }
+
+/* Footer */
+.footer { text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.08); font-size: 12px; color: #484f58; }
+
+@media(max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+  .header h1 { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">ITEM · Reports Hub</div>
+    <h1>产品与研发报告中心</h1>
+    <div class="sub">WMS Development Blueprint · Weekly Reports · Business Analysis · Resource Planning</div>
+    <div class="badges">
+      <span class="badge green">✓ 实时更新</span>
+      <span class="badge blue">WMS · OMS · WES · YMS</span>
+      <span class="badge purple">2026 Q3</span>
+    </div>
+  </div>
+
+  <!-- WMS开发蓝图 -->
+  <div class="sec-title">📦 WMS 开发蓝图</div>
+  <div class="grid">
+
+    <a class="card" href="wms-blueprint-comparison-2026.html">
+      <div class="card-top">
+        <span class="card-icon">📊</span>
+        <span class="card-tag tag-wms">WMS · 对比分析</span>
+      </div>
+      <div class="card-title"><span class="updated"></span>WMS开发蓝图进展对比报告 2026</div>
+      <div class="card-desc">Feb vs Sep 双版本全面对比。涵盖OMS/WMS/WES/YMS/APS/LMS/Integration等12个系统，282条功能点状态变化、BA人员变动、各季度进展汇总。</div>
+      <div class="card-footer">
+        <span class="card-date">更新：2026-09-30</span>
+        <span class="card-arrow">查看报告 →</span>
+      </div>
+    </a>
+
+    <a class="card" href="2026-development-blueprint-dashboard.html">
+      <div class="card-top">
+        <span class="card-icon">🗺️</span>
+        <span class="card-tag tag-wms">WMS · 全年规划</span>
+      </div>
+      <div class="card-title">ITEM 2026 Development Blueprint Dashboard</div>
+      <div class="card-desc">2026年度开发蓝图全景看板。468个功能点，11个开发团队，12+系统覆盖，含Q1-Q4时间线、优先级分布、AI能力规划。</div>
+      <div class="card-footer">
+        <span class="card-date">2026 全年规划</span>
+        <span class="card-arrow">查看看板 →</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- 周报 -->
+  <div class="sec-title">📅 周报 Weekly Reports</div>
+  <div class="grid">
+
+    <a class="card" href="weekly-report-2026-W39.html">
+      <div class="card-top">
+        <span class="card-icon">📝</span>
+        <span class="card-tag tag-weekly">周报 · W39</span>
+      </div>
+      <div class="card-title"><span class="updated"></span>2026 W39 周报</div>
+      <div class="card-desc">第39周产品研发进展汇报，包含各模块进度更新、风险识别与下周计划。</div>
+      <div class="card-footer">
+        <span class="card-date">2026 W39</span>
+        <span class="card-arrow">查看 →</span>
+      </div>
+    </a>
+
+    <a class="card" href="weekly-report-2026-W37.html">
+      <div class="card-top">
+        <span class="card-icon">📝</span>
+        <span class="card-tag tag-weekly">周报 · W37</span>
+      </div>
+      <div class="card-title">2026 W37 周报</div>
+      <div class="card-desc">第37周产品研发进展汇报，包含各模块进度更新、风险识别与下周计划。</div>
+      <div class="card-footer">
+        <span class="card-date">2026 W37</span>
+        <span class="card-arrow">查看 →</span>
+      </div>
+    </a>
+
+    <a class="card" href="weekly-report-2026-W36.html">
+      <div class="card-top">
+        <span class="card-icon">📝</span>
+        <span class="card-tag tag-weekly">周报 · W36</span>
+      </div>
+      <div class="card-title">2026 W36 周报</div>
+      <div class="card-desc">第36周产品研发进展汇报。</div>
+      <div class="card-footer">
+        <span class="card-date">2026 W36</span>
+        <span class="card-arrow">查看 →</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- 业务分析 -->
+  <div class="sec-title">🔍 业务分析 Business Analysis</div>
+  <div class="grid">
+
+    <a class="card" href="三大业务板块与7大核心场景.html">
+      <div class="card-top">
+        <span class="card-icon">🏗️</span>
+        <span class="card-tag tag-plan">业务规划</span>
+      </div>
+      <div class="card-title">三大业务板块与7大核心场景</div>
+      <div class="card-desc">ITEM平台三大业务板块全景解析，7大核心履约场景深度梳理，产品战略规划参考文档。</div>
+      <div class="card-footer">
+        <span class="card-date">2026</span>
+        <span class="card-arrow">查看 →</span>
+      </div>
+    </a>
+
+    <a class="card" href="FDE-2026-年中汇报.html">
+      <div class="card-top">
+        <span class="card-icon">📈</span>
+        <span class="card-tag tag-plan">年中汇报</span>
+      </div>
+      <div class="card-title">FDE 2026 年中汇报</div>
+      <div class="card-desc">2026年上半年FDE团队整体进展汇报，含业务成果、技术进展与下半年规划。</div>
+      <div class="card-footer">
+        <span class="card-date">2026 H1</span>
+        <span class="card-arrow">查看 →</span>
+      </div>
+    </a>
+
+    <a class="card" href="resource-dashboard-2026-09-28.html">
+      <div class="card-top">
+        <span class="card-icon">👥</span>
+        <span class="card-tag tag-bi">资源看板</span>
+      </div>
+      <div class="card-title">资源看板 2026-09-28</div>
+      <div class="card-desc">团队资源分配与利用率看板，各团队工作量分布与项目资源投入分析。</div>
+      <div class="card-footer">
+        <span class="card-date">2026-09-28</span>
+        <span class="card-arrow">查看 →</span>
+      </div>
+    </a>
+
+    <a class="card" href="release-summary.html">
+      <div class="card-top">
+        <span class="card-icon">🚀</span>
+        <span class="card-tag tag-report">发布摘要</span>
+      </div>
+      <div class="card-title">Release Summary 发布摘要</div>
+      <div class="card-desc">版本发布摘要，记录各系统功能上线情况与版本变更日志。</div>
+      <div class="card-footer">
+        <span class="card-date">2026</span>
+        <span class="card-arrow">查看 →</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- 项目报告 -->
+  <div class="sec-title">📋 项目报告 Project Reports</div>
+  <div class="grid">
+
+    <a class="card" href="glory-wisdom-project-report.html">
+      <div class="card-top">
+        <span class="card-icon">⭐</span>
+        <span class="card-tag tag-report">项目报告</span>
+      </div>
+      <div class="card-title">Glory Wisdom 项目报告</div>
+      <div class="card-desc">Glory Wisdom项目整体进展报告，含需求完成情况、交付节点与风险跟踪。</div>
+      <div class="card-footer">
+        <span class="card-date">2026</span>
+        <span class="card-arrow">查看 →</span>
+      </div>
+    </a>
+
+    <a class="card" href="starmerx-project-report.html">
+      <div class="card-top">
+        <span class="card-icon">🌟</span>
+        <span class="card-tag tag-report">项目报告</span>
+      </div>
+      <div class="card-title">StarmerX 项目报告</div>
+      <div class="card-desc">StarmerX项目整体进展报告，含需求完成情况、交付节点与风险跟踪。</div>
+      <div class="card-footer">
+        <span class="card-date">2026</span>
+        <span class="card-arrow">查看 →</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="footer">
+    ITEM Reports Hub &nbsp;·&nbsp; wangcoco786 &nbsp;·&nbsp; 更新于 2026-09-30 &nbsp;·&nbsp; Powered by Vercel
+  </div>
+
+</div>
+</body>
+</html>

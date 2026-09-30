@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>ITEM 2026 Development Blueprint Dashboard</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+  background: linear-gradient(135deg, #0f1419 0%, #1a252f 50%, #0d1117 100%);
+  color: #e6edf3; min-height: 100vh; padding: 24px;
+}
+.container { max-width: 1600px; margin: 0 auto; }
+
+/* Header */
+.header {
+  text-align: center; margin-bottom: 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px;
+}
+.header h1 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.header .subtitle { color: #8b949e; font-size: 14px; }
+
+/* Top Stats */
+.top-stats {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-bottom: 32px;
+}
+.stat-card {
+  background: linear-gradient(145deg, rgba(22,27,34,0.9), rgba(13,17,23,0.9));
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+  padding: 20px; text-align: center;
+}
+.stat-card .label { color: #8b949e; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.stat-card .value { font-size: 36px; font-weight: 800; }
+.stat-card .sub { font-size: 12px; color: #8b949e; margin-top: 4px; }
+.stat-card.blue .value { color: #58a6ff; }
+.stat-card.red .value { color: #f85149; }
+.stat-card.yellow .value { color: #d29922; }
+.stat-card.green .value { color: #3fb950; }
+.stat-card.purple .value { color: #a371f7; }
+.stat-card.cyan .value { color: #39d0d6; }
+
+/* Timeline */
+.timeline-section { margin-bottom: 32px; }
+.timeline-section h2 { font-size: 16px; margin-bottom: 16px; color: #fff; }
+.timeline-bar {
+  display: flex; height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 12px;
+  background: rgba(255,255,255,0.1);
+}
+.timeline-bar .q1 { width: 25%; background: linear-gradient(90deg, #3fb950, #56d364); }
+.timeline-bar .q2 { width: 25%; background: linear-gradient(90deg, #58a6ff, #79c0ff); }
+.timeline-bar .q3 { width: 25%; background: linear-gradient(90deg, #d29922, #e3b341); position: relative; }
+.timeline-bar .q3::after {
+  content: ''; position: absolute; right: 0; top: -4px;
+  width: 16px; height: 16px; background: #3fb950; border-radius: 50%;
+  border: 3px solid #0d1117;
+}
+.timeline-bar .q4 { width: 25%; background: rgba(255,255,255,0.2); }
+.timeline-labels { display: flex; justify-content: space-between; margin-bottom: 20px; }
+.timeline-labels span { font-size: 12px; color: #8b949e; width: 25%; }
+.quarter-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.quarter-card {
+  background: rgba(22,27,34,0.8); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px; padding: 16px; border-left: 3px solid;
+}
+.quarter-card.q1 { border-left-color: #3fb950; }
+.quarter-card.q2 { border-left-color: #58a6ff; }
+.quarter-card.q3 { border-left-color: #d29922; }
+.quarter-card.q4 { border-left-color: #a371f7; }
+.quarter-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.quarter-card .focus { font-size: 13px; color: #58a6ff; margin-bottom: 8px; }
+.quarter-card .desc { font-size: 11px; color: #8b949e; line-height: 1.5; margin-bottom: 8px; }
+.quarter-card .teams { font-size: 10px; color: #8b949e; }
+.quarter-card .teams strong { color: #e6edf3; }
+
+/* System Modules */
+.modules-section { margin-bottom: 32px; }
+.modules-section h2 { font-size: 16px; margin-bottom: 16px; color: #fff; }
+.system-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.system-card {
+  background: rgba(22,27,34,0.9); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; overflow: hidden;
+}
+.system-header {
+  padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.system-header h3 { font-size: 16px; font-weight: 700; }
+.system-header .badge {
+  font-size: 11px; padding: 4px 10px; border-radius: 12px;
+  background: rgba(88,166,255,0.2); color: #58a6ff;
+}
+.system-body { padding: 16px 20px; }
+.team-info {
+  display: flex; gap: 20px; margin-bottom: 16px; padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.team-info .item { font-size: 12px; }
+.team-info .label { color: #8b949e; margin-right: 6px; }
+.team-info .value { color: #e6edf3; font-weight: 500; }
+
+/* Module Table */
+.module-table { width: 100%; font-size: 12px; }
+.module-table th {
+  text-align: left; padding: 8px 6px; color: #8b949e;
+  border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: 500;
+}
+.module-table td { padding: 10px 6px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.module-table tr:last-child td { border-bottom: none; }
+.module-name { font-weight: 500; color: #e6edf3; }
+.progress-bar {
+  width: 80px; height: 6px; background: rgba(255,255,255,0.1);
+  border-radius: 3px; overflow: hidden;
+}
+.progress-bar .fill { height: 100%; border-radius: 3px; }
+.progress-bar .fill.high { background: linear-gradient(90deg, #3fb950, #56d364); }
+.progress-bar .fill.medium { background: linear-gradient(90deg, #d29922, #e3b341); }
+.progress-bar .fill.low { background: linear-gradient(90deg, #f85149, #ff7b72); }
+.priority-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600;
+}
+.priority-badge.p0 { background: rgba(248,81,73,0.2); color: #f85149; }
+.priority-badge.p1 { background: rgba(210,153,34,0.2); color: #d29922; }
+.priority-badge.p2 { background: rgba(88,166,255,0.2); color: #58a6ff; }
+.priority-badge.p3 { background: rgba(139,148,158,0.2); color: #8b949e; }
+.status-dot {
+  display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px;
+}
+.status-dot.production { background: #3fb950; }
+.status-dot.planned { background: #d29922; }
+.status-dot.new { background: #58a6ff; }
+
+/* Summary Section */
+.summary-section { margin-bottom: 32px; }
+.summary-section h2 { font-size: 16px; margin-bottom: 16px; color: #fff; }
+.summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.summary-card {
+  background: rgba(22,27,34,0.9); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; padding: 20px;
+}
+.summary-card h3 { font-size: 14px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.summary-list { list-style: none; }
+.summary-list li {
+  display: flex; justify-content: space-between; padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 12px;
+}
+.summary-list li:last-child { border-bottom: none; }
+.summary-list .name { color: #e6edf3; }
+.summary-list .count { color: #58a6ff; font-weight: 600; }
+
+/* Team Section */
+.team-section { margin-bottom: 32px; }
+.team-section h2 { font-size: 16px; margin-bottom: 16px; color: #fff; }
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.team-card {
+  background: rgba(22,27,34,0.9); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; padding: 16px;
+}
+.team-card .team-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: #58a6ff; }
+.team-card .team-role { font-size: 11px; color: #a371f7; margin-bottom: 8px; }
+.team-card .team-members { font-size: 12px; color: #8b949e; margin-bottom: 12px; line-height: 1.6; }
+.team-card .team-members strong { color: #e6edf3; }
+.team-stats { display: flex; gap: 12px; }
+.team-stat { text-align: center; flex: 1; }
+.team-stat .num { font-size: 18px; font-weight: 700; }
+.team-stat .label { font-size: 10px; color: #8b949e; }
+.team-stat.p0 .num { color: #f85149; }
+.team-stat.p1 .num { color: #d29922; }
+.team-stat.total .num { color: #3fb950; }
+
+/* AI Section */
+.ai-section { margin-bottom: 32px; }
+.ai-section h2 { font-size: 16px; margin-bottom: 16px; color: #fff; }
+.ai-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.ai-card {
+  background: rgba(22,27,34,0.9); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px; padding: 16px; text-align: center;
+}
+.ai-card .level { font-size: 12px; color: #8b949e; margin-bottom: 8px; }
+.ai-card .count { font-size: 28px; font-weight: 700; }
+.ai-card.very-high .count { color: #a371f7; }
+.ai-card.high .count { color: #58a6ff; }
+.ai-card.medium .count { color: #3fb950; }
+.ai-card.low .count { color: #d29922; }
+.ai-card.none .count { color: #8b949e; }
+
+/* Legend */
+.legend {
+  display: flex; gap: 24px; margin-bottom: 20px; padding: 12px 16px;
+  background: rgba(22,27,34,0.6); border-radius: 8px;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #8b949e; }
+
+/* Footer */
+.footer {
+  text-align: center; padding-top: 20px; margin-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 11px; color: #8b949e;
+}
+
+@media (max-width: 1200px) {
+  .top-stats { grid-template-columns: repeat(3, 1fr); }
+  .system-grid { grid-template-columns: 1fr; }
+  .quarter-cards { grid-template-columns: repeat(2, 1fr); }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media print {
+  body { background: #fff; color: #1f2430; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .stat-card, .system-card, .quarter-card, .summary-card, .team-card, .ai-card {
+    background: #f6f8fa; border-color: #d0d7de;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>ITEM 2026 Development Blueprint Dashboard</h1>
+    <div class="subtitle">ITEM 2026年度开发蓝图 • 468 Functions 功能点 • 11 Teams 团队 • 12+ Systems 系统</div>
+  </div>
+
+  <!-- Top Stats -->
+  <div class="top-stats">
+    <div class="stat-card blue">
+      <div class="label">Total Functions 总功能数</div>
+      <div class="value">468</div>
+      <div class="sub">across 12+ systems 覆盖12+系统</div>
+    </div>
+    <div class="stat-card red">
+      <div class="label">P0 Critical 紧急</div>
+      <div class="value">90</div>
+      <div class="sub">19.2% of total 占比</div>
+    </div>
+    <div class="stat-card yellow">
+      <div class="label">P1 High 高优先级</div>
+      <div class="value">133</div>
+      <div class="sub">28.4% of total 占比</div>
+    </div>
+    <div class="stat-card green">
+      <div class="label">Dev Teams 开发团队</div>
+      <div class="value">11</div>
+      <div class="sub">including support 含支持团队</div>
+    </div>
+    <div class="stat-card purple">
+      <div class="label">AI-Enabled AI化率</div>
+      <div class="value">72%</div>
+      <div class="sub">337 functions 个功能</div>
+    </div>
+    <div class="stat-card cyan">
+      <div class="label">Total Effort 总工作量</div>
+      <div class="value">7.8K</div>
+      <div class="sub">person-days 人天估算</div>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="timeline-section">
+    <h2>2026 Development Timeline 开发时间线</h2>
+    <div class="timeline-bar">
+      <div class="q1"></div>
+      <div class="q2"></div>
+      <div class="q3"></div>
+      <div class="q4"></div>
+    </div>
+    <div class="timeline-labels">
+      <span>Q1 第一季度</span><span>Q2 第二季度</span><span>Q3 第三季度 (Current 当前)</span><span>Q4 第四季度</span>
+    </div>
+    <div class="quarter-cards">
+      <div class="quarter-card q1">
+        <h3>Q1 2026</h3>
+        <div class="focus">AI Infrastructure 基础设施, Core Platform 核心平台</div>
+        <div class="desc">LLM Gateway, Agent Templates, Architecture Platform, Critical WMS/OMS features</div>
+        <div class="teams"><strong>Teams 团队:</strong> 任展, 杜军红, Quinn, 崔翔</div>
+      </div>
+      <div class="quarter-card q2">
+        <h3>Q2 2026</h3>
+        <div class="focus">Customer-Facing 客户系统</div>
+        <div class="desc">Client Portal, WMS AI features, TMS core, Ontology platform</div>
+        <div class="teams"><strong>Teams 团队:</strong> 崔翔, Quinn, Simon Yu, 张凌阁</div>
+      </div>
+      <div class="quarter-card q3">
+        <h3>Q3 2026</h3>
+        <div class="focus">Advanced AI & Automation 高级AI与自动化</div>
+        <div class="desc">AI-WMS features, RMS, Last Mile, Agent Factory</div>
+        <div class="teams"><strong>Teams 团队:</strong> Quinn, 任展, Simon Yu</div>
+      </div>
+      <div class="quarter-card q4">
+        <h3>Q4 2026</h3>
+        <div class="focus">Industry Specialization 行业专业化</div>
+        <div class="desc">Freight Forwarding, Cyclelution, Brokerage expansion</div>
+        <div class="teams"><strong>Teams 团队:</strong> Simon Yu, Quinn</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item"><span class="status-dot production"></span> Production 生产</div>
+    <div class="legend-item"><span class="status-dot planned"></span> Planned 计划中</div>
+    <div class="legend-item"><span class="status-dot new"></span> New 新增</div>
+    <div class="legend-item"><span class="priority-badge p0">P0</span> Critical 紧急</div>
+    <div class="legend-item"><span class="priority-badge p1">P1</span> High 高</div>
+    <div class="legend-item"><span class="priority-badge p2">P2</span> Medium 中</div>
+    <div class="legend-item"><span class="priority-badge p3">P3</span> Low 低</div>
+  </div>
+
+  <!-- System Modules -->
+  <div class="modules-section">
+    <h2>System Modules Overview 系统模块概览</h2>
+    <div class="system-grid">
+
+      <!-- OMS -->
+      <div class="system-card">
+        <div class="system-header">
+          <h3>OMS 订单管理系统</h3>
+          <span class="badge">24 Functions 功能</span>
+        </div>
+        <div class="system-body">
+          <div class="team-info">
+            <div class="item"><span class="label">BA 业务分析:</span><span class="value">LiuWei / Wesley</span></div>
+            <div class="item"><span class="label">Dev 开发:</span><span class="value">崔翔 Linker</span></div>
+          </div>
+          <table class="module-table">
+            <tr><th>Sub-Module 子模块</th><th>Functions 功能</th><th>Priority 优先级</th><th>Status 状态</th><th>Progress 进度</th></tr>
+            <tr>
+              <td class="module-name">Distributed Order Management 分布式订单管理</td>
+              <td>14</td>
+              <td><span class="priority-badge p0">P0</span> <span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill high" style="width:50%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Sterling Global Inventory 全球库存可视化</td>
+              <td>5</td>
+              <td><span class="priority-badge p1">P1</span> <span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:10%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Logistics Management 物流管理</td>
+              <td>3</td>
+              <td><span class="priority-badge p0">P0</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill high" style="width:70%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Sterling Reverse Logistics 逆向物流</td>
+              <td>2</td>
+              <td><span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- WMS -->
+      <div class="system-card">
+        <div class="system-header">
+          <h3>WMS 仓库管理系统</h3>
+          <span class="badge">98 Functions 功能</span>
+        </div>
+        <div class="system-body">
+          <div class="team-info">
+            <div class="item"><span class="label">BA 业务分析:</span><span class="value">YanJun / Wesley / Gus / Levent</span></div>
+            <div class="item"><span class="label">Dev 开发:</span><span class="value">Quinn</span></div>
+          </div>
+          <table class="module-table">
+            <tr><th>Sub-Module 子模块</th><th>Functions 功能</th><th>Priority 优先级</th><th>Status 状态</th><th>Progress 进度</th></tr>
+            <tr>
+              <td class="module-name">Receiving Module 收货模块</td>
+              <td>23</td>
+              <td><span class="priority-badge p0">P0</span> <span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill high" style="width:45%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">QC Module 质检模块</td>
+              <td>6</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Inventory Management 库存管理</td>
+              <td>12</td>
+              <td><span class="priority-badge p0">P0</span> <span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill medium" style="width:30%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Kit Management 套件管理</td>
+              <td>4</td>
+              <td><span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Order Fulfillment 订单履约</td>
+              <td>23</td>
+              <td><span class="priority-badge p0">P0</span> <span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill medium" style="width:40%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Picking & Shipping 拣货发货</td>
+              <td>26</td>
+              <td><span class="priority-badge p0">P0</span> <span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill medium" style="width:25%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Package Management 包裹管理</td>
+              <td>4</td>
+              <td><span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- WES -->
+      <div class="system-card">
+        <div class="system-header">
+          <h3>WES 仓库执行系统</h3>
+          <span class="badge">44 Functions 功能</span>
+        </div>
+        <div class="system-body">
+          <div class="team-info">
+            <div class="item"><span class="label">BA 业务分析:</span><span class="value">Levent / ZhongLiang</span></div>
+            <div class="item"><span class="label">Dev 开发:</span><span class="value">Leyo</span></div>
+          </div>
+          <table class="module-table">
+            <tr><th>Sub-Module 子模块</th><th>Functions 功能</th><th>Priority 优先级</th><th>Status 状态</th><th>Progress 进度</th></tr>
+            <tr>
+              <td class="module-name">Workload Balancing 负载均衡</td>
+              <td>4</td>
+              <td><span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Task Prioritization 任务优先级</td>
+              <td>4</td>
+              <td><span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Order Orchestration 订单编排</td>
+              <td>4</td>
+              <td><span class="priority-badge p0">P0</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill medium" style="width:25%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Automated Routing 自动路由</td>
+              <td>4</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Real-Time Dashboards 实时看板</td>
+              <td>4</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Integration & Automation 集成与自动化</td>
+              <td>11</td>
+              <td><span class="priority-badge p0">P0</span> <span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill medium" style="width:20%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Wave Processing 波次处理</td>
+              <td>4</td>
+              <td><span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- LMS -->
+      <div class="system-card">
+        <div class="system-header">
+          <h3>LMS 劳动力管理系统</h3>
+          <span class="badge">36 Functions 功能</span>
+        </div>
+        <div class="system-body">
+          <div class="team-info">
+            <div class="item"><span class="label">BA 业务分析:</span><span class="value">Levent / ZhongLiang</span></div>
+            <div class="item"><span class="label">Dev 开发:</span><span class="value">Eddie</span></div>
+          </div>
+          <table class="module-table">
+            <tr><th>Sub-Module 子模块</th><th>Functions 功能</th><th>Priority 优先级</th><th>Status 状态</th><th>Progress 进度</th></tr>
+            <tr>
+              <td class="module-name">Real-Time Labor Tracking 实时人员追踪</td>
+              <td>4</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Performance Standards 绩效标准</td>
+              <td>4</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Workforce Planning 劳动力规划</td>
+              <td>4</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Travel Path Optimization 路径优化</td>
+              <td>4</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Labor Cost Management 人工成本管理</td>
+              <td>4</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">KPI Dashboards 绩效看板</td>
+              <td>4</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- YMS -->
+      <div class="system-card">
+        <div class="system-header">
+          <h3>YMS 园区管理系统</h3>
+          <span class="badge">36 Functions 功能</span>
+        </div>
+        <div class="system-body">
+          <div class="team-info">
+            <div class="item"><span class="label">BA 业务分析:</span><span class="value">Eddie</span></div>
+            <div class="item"><span class="label">Dev 开发:</span><span class="value">Eddie</span></div>
+          </div>
+          <table class="module-table">
+            <tr><th>Sub-Module 子模块</th><th>Functions 功能</th><th>Priority 优先级</th><th>Status 状态</th><th>Progress 进度</th></tr>
+            <tr>
+              <td class="module-name">Gate Management 门禁管理</td>
+              <td>5</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Yard Inventory 园区库存</td>
+              <td>5</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Dock Door Management 月台管理</td>
+              <td>5</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Yard Analytics 园区分析</td>
+              <td>5</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Appointment Scheduling 预约调度</td>
+              <td>4</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Integration & Mobile 集成与移动端</td>
+              <td>8</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- TMS -->
+      <div class="system-card">
+        <div class="system-header">
+          <h3>TMS 运输管理系统</h3>
+          <span class="badge">52 Functions 功能</span>
+        </div>
+        <div class="system-body">
+          <div class="team-info">
+            <div class="item"><span class="label">BA 业务分析:</span><span class="value">Simon Yu / Zhang Ling</span></div>
+            <div class="item"><span class="label">Dev 开发:</span><span class="value">Simon Yu / 张凌阁</span></div>
+          </div>
+          <table class="module-table">
+            <tr><th>Sub-Module 子模块</th><th>Functions 功能</th><th>Priority 优先级</th><th>Status 状态</th><th>Progress 进度</th></tr>
+            <tr>
+              <td class="module-name">Load Planning 装载计划</td>
+              <td>8</td>
+              <td><span class="priority-badge p0">P0</span> <span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill high" style="width:60%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Route Optimization 路线优化</td>
+              <td>6</td>
+              <td><span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill medium" style="width:30%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Carrier Management 承运商管理</td>
+              <td>8</td>
+              <td><span class="priority-badge p0">P0</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill high" style="width:50%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Freight Audit & Payment 运费审核支付</td>
+              <td>6</td>
+              <td><span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:15%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Real-Time Tracking 实时追踪</td>
+              <td>6</td>
+              <td><span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill medium" style="width:40%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Last Mile Delivery 最后一公里</td>
+              <td>10</td>
+              <td><span class="priority-badge p0">P0</span> <span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:10%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">EDI Integration EDI集成</td>
+              <td>8</td>
+              <td><span class="priority-badge p0">P0</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill high" style="width:55%"></div></div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- AI Platform -->
+      <div class="system-card">
+        <div class="system-header">
+          <h3>AI Platform 智能平台</h3>
+          <span class="badge">68 Functions 功能</span>
+        </div>
+        <div class="system-body">
+          <div class="team-info">
+            <div class="item"><span class="label">BA 业务分析:</span><span class="value">Suili / PM Team</span></div>
+            <div class="item"><span class="label">Dev 开发:</span><span class="value">任展 / 杜军红</span></div>
+          </div>
+          <table class="module-table">
+            <tr><th>Sub-Module 子模块</th><th>Functions 功能</th><th>Priority 优先级</th><th>Status 状态</th><th>Progress 进度</th></tr>
+            <tr>
+              <td class="module-name">LLM Gateway 大模型网关</td>
+              <td>12</td>
+              <td><span class="priority-badge p0">P0</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill high" style="width:80%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Agent Factory 智能体工厂</td>
+              <td>15</td>
+              <td><span class="priority-badge p0">P0</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill high" style="width:65%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Knowledge Base 知识库</td>
+              <td>10</td>
+              <td><span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill high" style="width:50%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">AI Assistants AI助手</td>
+              <td>12</td>
+              <td><span class="priority-badge p0">P0</span> <span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill high" style="width:45%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Workflow Automation 流程自动化</td>
+              <td>8</td>
+              <td><span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill medium" style="width:25%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Analytics & Insights 分析洞察</td>
+              <td>6</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:10%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Model Training 模型训练</td>
+              <td>5</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:5%"></div></div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Client Portal -->
+      <div class="system-card">
+        <div class="system-header">
+          <h3>Client Portal 客户门户</h3>
+          <span class="badge">38 Functions 功能</span>
+        </div>
+        <div class="system-body">
+          <div class="team-info">
+            <div class="item"><span class="label">BA 业务分析:</span><span class="value">Kevin / Wesley</span></div>
+            <div class="item"><span class="label">Dev 开发:</span><span class="value">崔翔 Team</span></div>
+          </div>
+          <table class="module-table">
+            <tr><th>Sub-Module 子模块</th><th>Functions 功能</th><th>Priority 优先级</th><th>Status 状态</th><th>Progress 进度</th></tr>
+            <tr>
+              <td class="module-name">User Management 用户管理</td>
+              <td>8</td>
+              <td><span class="priority-badge p0">P0</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill high" style="width:70%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Order Visibility 订单可视化</td>
+              <td>10</td>
+              <td><span class="priority-badge p0">P0</span> <span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill high" style="width:60%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Inventory View 库存查看</td>
+              <td>6</td>
+              <td><span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot production"></span>Production</td>
+              <td><div class="progress-bar"><div class="fill medium" style="width:40%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Reporting & Analytics 报表分析</td>
+              <td>8</td>
+              <td><span class="priority-badge p1">P1</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill medium" style="width:25%"></div></div></td>
+            </tr>
+            <tr>
+              <td class="module-name">Self-Service Tools 自助工具</td>
+              <td>6</td>
+              <td><span class="priority-badge p2">P2</span></td>
+              <td><span class="status-dot planned"></span>Planned</td>
+              <td><div class="progress-bar"><div class="fill low" style="width:10%"></div></div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Team Assignment -->
+  <div class="team-section">
+    <h2>Team Assignment 团队分配</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-name">Quinn Team</div>
+        <div class="team-role">WMS Core 仓库核心</div>
+        <div class="team-members"><strong>BA:</strong> YanJun, Wesley, Gus, Levent<br><strong>Dev:</strong> Quinn Team</div>
+        <div class="team-stats">
+          <div class="team-stat p0"><div class="num">28</div><div class="label">P0</div></div>
+          <div class="team-stat p1"><div class="num">35</div><div class="label">P1</div></div>
+          <div class="team-stat total"><div class="num">98</div><div class="label">Total 总计</div></div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-name">任展 Team</div>
+        <div class="team-role">AI Platform 智能平台</div>
+        <div class="team-members"><strong>BA:</strong> Suili, PM Team<br><strong>Dev:</strong> 任展, 杜军红</div>
+        <div class="team-stats">
+          <div class="team-stat p0"><div class="num">18</div><div class="label">P0</div></div>
+          <div class="team-stat p1"><div class="num">22</div><div class="label">P1</div></div>
+          <div class="team-stat total"><div class="num">68</div><div class="label">Total 总计</div></div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-name">Simon Yu Team</div>
+        <div class="team-role">TMS 运输管理</div>
+        <div class="team-members"><strong>BA:</strong> Simon Yu, Zhang Ling<br><strong>Dev:</strong> Simon Yu, 张凌阁</div>
+        <div class="team-stats">
+          <div class="team-stat p0"><div class="num">15</div><div class="label">P0</div></div>
+          <div class="team-stat p1"><div class="num">18</div><div class="label">P1</div></div>
+          <div class="team-stat total"><div class="num">52</div><div class="label">Total 总计</div></div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-name">崔翔 Linker Team</div>
+        <div class="team-role">OMS & Client Portal 订单与客户门户</div>
+        <div class="team-members"><strong>BA:</strong> LiuWei, Wesley, Kevin<br><strong>Dev:</strong> 崔翔 Linker Team</div>
+        <div class="team-stats">
+          <div class="team-stat p0"><div class="num">12</div><div class="label">P0</div></div>
+          <div class="team-stat p1"><div class="num">20</div><div class="label">P1</div></div>
+          <div class="team-stat total"><div class="num">62</div><div class="label">Total 总计</div></div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-name">Eddie Team</div>
+        <div class="team-role">YMS & LMS 园区与劳动力</div>
+        <div class="team-members"><strong>BA:</strong> Eddie, Levent, ZhongLiang<br><strong>Dev:</strong> Eddie Team</div>
+        <div class="team-stats">
+          <div class="team-stat p0"><div class="num">8</div><div class="label">P0</div></div>
+          <div class="team-stat p1"><div class="num">15</div><div class="label">P1</div></div>
+          <div class="team-stat total"><div class="num">72</div><div class="label">Total 总计</div></div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-name">Leyo Team</div>
+        <div class="team-role">WES 仓库执行</div>
+        <div class="team-members"><strong>BA:</strong> Levent, ZhongLiang<br><strong>Dev:</strong> Leyo Team</div>
+        <div class="team-stats">
+          <div class="team-stat p0"><div class="num">9</div><div class="label">P0</div></div>
+          <div class="team-stat p1"><div class="num">12</div><div class="label">P1</div></div>
+          <div class="team-stat total"><div class="num">44</div><div class="label">Total 总计</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary-section">
+    <h2>Task Summary 任务汇总</h2>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <h3>By Priority 按优先级</h3>
+        <ul class="summary-list">
+          <li><span class="name">P0 - Critical 紧急</span><span class="count" style="color:#f85149">90</span></li>
+          <li><span class="name">P1 - High 高优先级</span><span class="count" style="color:#d29922">133</span></li>
+          <li><span class="name">P2 - Medium 中等</span><span class="count" style="color:#58a6ff">168</span></li>
+          <li><span class="name">P3 - Low 低优先级</span><span class="count" style="color:#8b949e">77</span></li>
+        </ul>
+      </div>
+      <div class="summary-card">
+        <h3>By Status 按状态</h3>
+        <ul class="summary-list">
+          <li><span class="name">Production 生产中</span><span class="count" style="color:#3fb950">156</span></li>
+          <li><span class="name">Planned 计划中</span><span class="count" style="color:#d29922">234</span></li>
+          <li><span class="name">New 新增</span><span class="count" style="color:#58a6ff">78</span></li>
+        </ul>
+      </div>
+      <div class="summary-card">
+        <h3>By Phase 按阶段</h3>
+        <ul class="summary-list">
+          <li><span class="name">Q1 - Foundation 基础建设</span><span class="count">112</span></li>
+          <li><span class="name">Q2 - Customer Focus 客户导向</span><span class="count">138</span></li>
+          <li><span class="name">Q3 - AI & Automation AI自动化</span><span class="count">124</span></li>
+          <li><span class="name">Q4 - Specialization 专业化</span><span class="count">94</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Potential -->
+  <div class="ai-section">
+    <h2>AI Potential Distribution AI化潜力分布</h2>
+    <div class="ai-grid">
+      <div class="ai-card very-high">
+        <div class="level">Very High 极高</div>
+        <div class="count">89</div>
+      </div>
+      <div class="ai-card high">
+        <div class="level">High 高</div>
+        <div class="count">124</div>
+      </div>
+      <div class="ai-card medium">
+        <div class="level">Medium 中等</div>
+        <div class="count">124</div>
+      </div>
+      <div class="ai-card low">
+        <div class="level">Low 低</div>
+        <div class="count">87</div>
+      </div>
+      <div class="ai-card none">
+        <div class="level">N/A 不适用</div>
+        <div class="count">44</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    Generated 生成时间: 2026-09-24 | ITEM Technology | 2026 Development Blueprint Dashboard 开发蓝图看板
+  </div>
+
+</div>
+</body>
+</html>

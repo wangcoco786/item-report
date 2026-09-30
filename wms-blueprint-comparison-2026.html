@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WMS开发蓝图进展对比报告 2026 | Feb vs Sep</title>
+<style>
+:root{--pri:#1a56db;--pri-l:#e8f0fe;--suc:#057a55;--suc-l:#def7ec;--war:#c27803;--war-l:#fdf6b2;--dan:#e02424;--dan-l:#fde8e8;--pur:#6c2bd9;--pur-l:#edebfe;--tea:#0891b2;--ora:#ea580c;--ora-l:#fff7ed;--g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;--g500:#6b7280;--g700:#374151;--g900:#111827;--bg:#f0f4f8;--card:#fff;--r:12px;--sh:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.06)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--g900);font-size:14px;line-height:1.6}
+.hdr{background:linear-gradient(135deg,#1a56db 0%,#1e40af 40%,#5b21b6 100%);color:#fff;padding:36px 40px 28px}
+.hdr h1{font-size:26px;font-weight:700;letter-spacing:-.3px}
+.hdr .sub{margin-top:6px;opacity:.85;font-size:14px}
+.hdr .meta{margin-top:14px;display:flex;gap:20px;flex-wrap:wrap}
+.mi{display:flex;align-items:center;gap:6px;font-size:13px;opacity:.9}
+.mi .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.7)}
+.wrap{max-width:1320px;margin:0 auto;padding:28px 32px 60px}
+.stitle{font-size:17px;font-weight:700;color:var(--g900);margin:36px 0 16px;padding-left:12px;border-left:4px solid var(--pri);display:flex;align-items:center;gap:8px}
+.stitle span{font-size:12px;font-weight:500;color:var(--g500);margin-left:4px}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:22px;border:1px solid var(--g200)}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
+.kc{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:18px 20px;border:1px solid var(--g200);position:relative;overflow:hidden}
+.kc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kc.blue::before{background:var(--pri)}.kc.green::before{background:var(--suc)}.kc.yellow::before{background:var(--war)}.kc.red::before{background:var(--dan)}.kc.purple::before{background:var(--pur)}.kc.teal::before{background:var(--tea)}.kc.orange::before{background:var(--ora)}
+.kl{font-size:11px;color:var(--g500);font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+.kv{font-size:30px;font-weight:800;margin:6px 0 3px;line-height:1}
+.kc.blue .kv{color:var(--pri)}.kc.green .kv{color:var(--suc)}.kc.yellow .kv{color:var(--war)}.kc.red .kv{color:var(--dan)}.kc.purple .kv{color:var(--pur)}.kc.teal .kv{color:var(--tea)}.kc.orange .kv{color:var(--ora)}
+.ks{font-size:11px;color:var(--g500)}
+.kb{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;margin-top:5px}
+.kb.up{background:var(--suc-l);color:var(--suc)}.kb.new{background:var(--pur-l);color:var(--pur)}.kb.warn{background:var(--war-l);color:var(--war)}
+.t{width:100%;border-collapse:collapse}
+.t th{background:var(--g50);padding:9px 13px;text-align:left;font-size:12px;font-weight:600;color:var(--g500);border-bottom:2px solid var(--g200);white-space:nowrap}
+.t td{padding:9px 13px;border-bottom:1px solid var(--g100);font-size:13px;vertical-align:middle}
+.t tr:hover td{background:var(--g50)}.t tr:last-child td{border-bottom:none}
+.hl td{background:#fffbeb!important}
+.pill{display:inline-flex;align-items:center;padding:2px 9px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap}
+.pp{background:var(--suc-l);color:var(--suc)}.pe{background:var(--war-l);color:var(--war)}.pn{background:#e0f2fe;color:#0369a1}.pw{background:var(--pur-l);color:var(--pur)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+@media(max-width:960px){.g2,.g3{grid-template-columns:1fr}}
+.ibox{background:linear-gradient(135deg,#eff6ff,#eef2ff);border:1px solid #bfdbfe;border-radius:var(--r);padding:16px 20px;margin-bottom:20px}
+.ibox h4{font-size:13px;font-weight:700;color:#1d4ed8;margin-bottom:8px}
+.ilist{list-style:none;display:flex;flex-direction:column;gap:5px}
+.ilist li{font-size:13px;color:#1e3a8a;padding-left:16px;position:relative}
+.ilist li::before{content:'→';position:absolute;left:0;color:#3b82f6;font-weight:700}
+.ba-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.bac{background:var(--card);border-radius:var(--r);border:1px solid var(--g200);box-shadow:var(--sh);overflow:hidden}
+.bah{padding:14px 18px 10px;border-bottom:1px solid var(--g100);display:flex;align-items:flex-start;gap:10px}
+.bav{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0}
+.bai{flex:1}.ban{font-size:14px;font-weight:700;color:var(--g900)}.bat{font-size:11px;color:var(--g500);margin-top:1px}
+.banum{text-align:right}.bav2{font-size:20px;font-weight:800;color:var(--pri)}.bavl{font-size:10px;color:var(--g500)}
+.bab{padding:12px 18px}
+.bml{display:flex;flex-direction:column;gap:6px}
+.bmi{display:flex;align-items:center;gap:7px}
+.bmn{flex:1;font-size:12px;color:var(--g700)}
+.bmw{width:60px;background:var(--g200);border-radius:99px;height:5px}
+.bmb{height:5px;border-radius:99px}
+.bmc{font-size:11px;font-weight:700;color:var(--g700);width:20px;text-align:right}
+.bsp{display:flex;gap:4px;flex-wrap:wrap;margin-top:9px}
+.ctag{display:inline-flex;align-items:center;font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;background:var(--war-l);color:var(--war);margin-top:5px}
+.ctag.ok{background:#dcfce7;color:#166534}.ctag.err{background:#fee2e2;color:#dc2626}
+.pbar-wrap{background:var(--g200);border-radius:99px;height:7px;overflow:hidden}
+.pbar{height:7px;border-radius:99px}
+.tab-bar{display:flex;gap:2px;margin-bottom:18px;background:var(--g100);padding:4px;border-radius:10px;width:fit-content;flex-wrap:wrap}
+.tb{padding:6px 15px;border-radius:8px;border:none;cursor:pointer;font-size:13px;font-weight:600;background:transparent;color:var(--g500);transition:all .2s}
+.tb.active{background:var(--card);color:var(--pri);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.tc{display:none}.tc.active{display:block}
+.rb{display:inline-block;font-size:11px;font-weight:700;padding:2px 7px;border-radius:5px}
+.rb-hi{background:#dcfce7;color:#166534}.rb-mi{background:#fef3c7;color:#b45309}.rb-lo{background:#fee2e2;color:#dc2626}.rb-nw{background:var(--pur-l);color:var(--pur)}
+.cb{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px}
+.cb-ok{background:#dcfce7;color:#166534}.cb-add{background:#f3e8ff;color:#6b21a8}.cb-w{background:#fff7ed;color:#c2410c}.cb-s{background:#f1f5f9;color:#64748b}
+.ftr{text-align:center;padding:24px;font-size:12px;color:var(--g500);border-top:1px solid var(--g200);margin-top:40px}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <h1>📦 WMS开发蓝图进展对比报告 2026</h1>
+  <div class="sub">February Blueprint（年初规划）vs September Update（最新进展）· 基于最新Sep数据精确统计 · 2026-09-30</div>
+  <div class="meta">
+    <div class="mi"><span class="dot"></span>数据来源：2026 WMS Development Blueprint（Feb & Sep两版）</div>
+    <div class="mi"><span class="dot"></span>涵盖系统：OMS / WMS / WES / YMS / APS / LMS / Integration / System / Reporting / RMS / Cyclelution / AI-WMS</div>
+    <div class="mi"><span class="dot"></span>核心变化：YMS由0%→大量Production；新增Enhancement分类；新增Jason/Wesley等BA</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ══ 一、整体汇总 ══ -->
+<div class="stitle">📊 一、整体进展汇总 <span>Overall Progress · 精确统计</span></div>
+
+<div class="ibox">
+  <h4>🔍 核心摘要（Sep版最新数据）</h4>
+  <ul class="ilist">
+    <li>已上线功能（Production）从年初 <strong>65条 → 113条</strong>，净增 +48条，上线率从24%提升至 <strong>40%</strong></li>
+    <li>新增「Enhancement」状态分类，共 <strong>62条</strong>，将"有基础需增强"从Planned中独立出来，管理更精细</li>
+    <li><strong>YMS重大突破</strong>：Gate Management 5条全部Production，Dock Door 4条Production，不再是0%；Yard Inventory等21条进入New（开始立项）</li>
+    <li><strong>OMS + Integration 完成率最高</strong>：崔翔Linker团队，OMS 96%、Integration 100%，是全团队标杆</li>
+    <li><strong>WES严重滞后</strong>：40条中37条仍Planned，Leyo团队完成率仅8%，是最大风险点</li>
+    <li>新立项 RMS(10) + Cyclelution(8) + AI-WMS(14) = <strong>32条</strong>新需求，产品版图持续扩展</li>
+    <li>人员调整：新增Jason/Wesley负责WMS Advanced Picking；YMS由Wangshuo升级为 <strong>Liuwei/Wangshuo 联合负责</strong></li>
+  </ul>
+</div>
+
+<div class="kpi-grid">
+  <div class="kc green"><div class="kl">已上线 Production</div><div class="kv">122</div><div class="ks">Feb 65 → Sep 122</div><div class="kb up">▲ +57条 · +88%</div></div>
+  <div class="kc yellow"><div class="kl">增强中 Enhancement</div><div class="kv">62</div><div class="ks">Feb 0 → Sep 62</div><div class="kb new">★ 新状态分类</div></div>
+  <div class="kc blue"><div class="kl">规划中 Planned</div><div class="kv">75</div><div class="ks">Feb 185 → Sep 75</div><div class="kb up">▼ -110条 · -59%</div></div>
+  <div class="kc purple"><div class="kl">新增需求 New</div><div class="kv">32</div><div class="ks">RMS+Cyclelution+AI-WMS</div><div class="kb new">▲ +12条 · +60%</div></div>
+  <div class="kc teal"><div class="kl">上线率</div><div class="kv">43%</div><div class="ks">Feb 24% → Sep 43%</div><div class="kb up">▲ +19 ppt · +79%</div></div>
+  <div class="kc green"><div class="kl">Prod+Enh 合计</div><div class="kv">184</div><div class="ks">已开发或开发中</div><div class="kb up">占比 65% · +124条</div></div>
+  <div class="kc blue"><div class="kl">总功能条目</div><div class="kv">282</div><div class="ks">Feb 270 → Sep 282</div><div class="kb up">▲ +12条 · +4%</div></div>
+  <div class="kc orange"><div class="kl">P0核心兑现率</div><div class="kv">95%</div><div class="ks">38条P0中36条Production</div><div class="kb up">核心交付优秀</div></div>
+</div>
+
+<!-- ══ 二、状态变化 ══ -->
+<div class="stitle">🔄 二、状态变化详情 <span>Status Distribution Change</span></div>
+
+<div class="g2">
+  <div class="card">
+    <div style="font-size:14px;font-weight:700;margin-bottom:14px">📈 全局状态对比（Feb vs Sep）</div>
+    <table class="t">
+      <thead><tr><th>状态</th><th>Feb（年初）</th><th>Sep（最新）</th><th>变化</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill pp">Production</span></td><td><b>65</b> <span style="color:var(--g500);font-size:11px">(24%)</span></td><td><b>113</b> <span style="color:var(--suc);font-size:11px">(40%)</span></td><td style="color:var(--suc);font-weight:700">▲ +48</td><td>大量功能上线</td></tr>
+        <tr class="hl"><td><span class="pill pe">Enhancement</span></td><td><b>0</b> <span style="color:var(--g500);font-size:11px">(0%)</span></td><td><b>62</b> <span style="color:var(--war);font-size:11px">(22%)</span></td><td style="color:var(--pur);font-weight:700">★ 新分类</td><td>从Planned细化独立</td></tr>
+        <tr><td><span class="pill pn">Planned</span></td><td><b>185</b> <span style="color:var(--g500);font-size:11px">(69%)</span></td><td><b>75</b> <span style="color:var(--pri);font-size:11px">(27%)</span></td><td style="color:var(--pri);font-weight:700">▼ -110</td><td>大量转化推进</td></tr>
+        <tr><td><span class="pill pw">New</span></td><td><b>20</b> <span style="color:var(--g500);font-size:11px">(7%)</span></td><td><b>32</b> <span style="color:var(--pur);font-size:11px">(11%)</span></td><td style="color:var(--pur);font-weight:700">▲ +12</td><td>新模块立项</td></tr>
+        <tr style="background:var(--g50)"><td><b>合计</b></td><td><b>270</b></td><td><b>282</b></td><td style="color:var(--suc);font-weight:700">+12</td><td>新增模块</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:18px">
+      <div style="font-size:12px;font-weight:600;color:var(--g500);margin-bottom:10px">状态分布可视化</div>
+      <div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--g700);margin-bottom:4px"><span>Production</span><span style="color:var(--suc);font-weight:700">+48 ↑</span></div>
+        <div style="display:flex;gap:6px;align-items:center;margin-bottom:3px"><span style="font-size:10px;color:var(--g500);width:26px">Feb</span><div class="pbar-wrap" style="flex:1"><div class="pbar" style="width:23%;background:var(--suc)"></div></div><span style="font-size:11px;width:28px">65</span></div>
+        <div style="display:flex;gap:6px;align-items:center"><span style="font-size:10px;color:var(--g500);width:26px">Sep</span><div class="pbar-wrap" style="flex:1"><div class="pbar" style="width:40%;background:var(--suc)"></div></div><span style="font-size:11px;width:28px;font-weight:700;color:var(--suc)">113</span></div>
+      </div>
+      <div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--g700);margin-bottom:4px"><span>Enhancement</span><span style="color:var(--pur);font-weight:700">★ 新分类</span></div>
+        <div style="display:flex;gap:6px;align-items:center;margin-bottom:3px"><span style="font-size:10px;color:var(--g500);width:26px">Feb</span><div class="pbar-wrap" style="flex:1"><div class="pbar" style="width:0%;background:#f59e0b"></div></div><span style="font-size:11px;width:28px">0</span></div>
+        <div style="display:flex;gap:6px;align-items:center"><span style="font-size:10px;color:var(--g500);width:26px">Sep</span><div class="pbar-wrap" style="flex:1"><div class="pbar" style="width:22%;background:#f59e0b"></div></div><span style="font-size:11px;width:28px;font-weight:700;color:var(--war)">62</span></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--g700);margin-bottom:4px"><span>Planned</span><span style="color:var(--dan);font-weight:700">-110 ↓</span></div>
+        <div style="display:flex;gap:6px;align-items:center;margin-bottom:3px"><span style="font-size:10px;color:var(--g500);width:26px">Feb</span><div class="pbar-wrap" style="flex:1"><div class="pbar" style="width:69%;background:var(--pri)"></div></div><span style="font-size:11px;width:28px">185</span></div>
+        <div style="display:flex;gap:6px;align-items:center"><span style="font-size:10px;color:var(--g500);width:26px">Sep</span><div class="pbar-wrap" style="flex:1"><div class="pbar" style="width:27%;background:var(--pri)"></div></div><span style="font-size:11px;width:28px;font-weight:700;color:var(--pri)">75</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:14px;font-weight:700;margin-bottom:14px">🗂️ 各系统完成状态（Sep版精确数据）</div>
+    <table class="t">
+      <thead><tr><th>系统</th><th>总计</th><th>Prod</th><th>Enh</th><th>Plan</th><th>New</th><th>进度</th></tr></thead>
+      <tbody>
+        <tr><td><b>OMS</b></td><td>24 <span style="color:var(--g500);font-size:10px">(9%)</span></td><td><span class="pill pp">15</span></td><td><span class="pill pe">8</span></td><td>1</td><td>0</td><td><span class="rb rb-hi">96%</span></td></tr>
+        <tr><td><b>WMS</b></td><td>103 <span style="color:var(--g500);font-size:10px">(37%)</span></td><td><span class="pill pp">44</span></td><td><span class="pill pe">11</span></td><td>48</td><td>0</td><td><span class="rb rb-mi">53%</span></td></tr>
+        <tr class="hl"><td><b>WES ↑</b></td><td>40 <span style="color:var(--g500);font-size:10px">(14%)</span></td><td><span class="pill pp">12</span></td><td>0</td><td>28</td><td>0</td><td><span class="rb rb-mi">30%</span></td></tr>
+        <tr><td><b>APS</b></td><td>24 <span style="color:var(--g500);font-size:10px">(9%)</span></td><td><span class="pill pp">5</span></td><td><span class="pill pe">7</span></td><td>12</td><td>0</td><td><span class="rb rb-mi">50%</span></td></tr>
+        <tr><td><b>LMS</b></td><td>12 <span style="color:var(--g500);font-size:10px">(4%)</span></td><td><span class="pill pp">5</span></td><td>0</td><td>4</td><td><span class="pill pw">3</span></td><td><span class="rb rb-mi">42%</span></td></tr>
+        <tr class="hl"><td><b>YMS ↑</b></td><td>40 <span style="color:var(--g500);font-size:10px">(14%)</span></td><td><span class="pill pp">15</span></td><td><span class="pill pe">4</span></td><td>0</td><td><span class="pill pw">21</span></td><td><span class="rb rb-mi">48%</span></td></tr>
+        <tr><td><b>Integration</b></td><td>18 <span style="color:var(--g500);font-size:10px">(6%)</span></td><td><span class="pill pp">15</span></td><td><span class="pill pe">3</span></td><td>0</td><td>0</td><td><span class="rb rb-hi">100%</span></td></tr>
+        <tr><td><b>System</b></td><td>20 <span style="color:var(--g500);font-size:10px">(7%)</span></td><td><span class="pill pp">6</span></td><td><span class="pill pe">9</span></td><td>5</td><td>0</td><td><span class="rb rb-mi">75%</span></td></tr>
+        <tr><td><b>Reporting</b></td><td>15 <span style="color:var(--g500);font-size:10px">(5%)</span></td><td><span class="pill pp">7</span></td><td>0</td><td>8</td><td>0</td><td><span class="rb rb-mi">47%</span></td></tr>
+        <tr><td><b>RMS</b></td><td>10 <span style="color:var(--g500);font-size:10px">(4%)</span></td><td>0</td><td>0</td><td>0</td><td><span class="pill pw">10</span></td><td><span class="rb rb-nw">新立项</span></td></tr>
+        <tr><td><b>Cyclelution</b></td><td>8 <span style="color:var(--g500);font-size:10px">(3%)</span></td><td>0</td><td>0</td><td>0</td><td><span class="pill pw">8</span></td><td><span class="rb rb-nw">新立项</span></td></tr>
+        <tr><td><b>AI-WMS</b></td><td>14 <span style="color:var(--g500);font-size:10px">(5%)</span></td><td>0</td><td>0</td><td>0</td><td><span class="pill pw">14</span></td><td><span class="rb rb-nw">新立项</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:10px;padding:9px 12px;background:#fff7ed;border-radius:7px;font-size:12px;color:#c2410c">
+      ⚡ <b>YMS重大更新</b>：Gate Management全部Production（Q3交付DIEV/LinkW/Chefman/YMS box），从0%跃升至48%
+    </div>
+  </div>
+</div>
+
+<!-- ══ 三、多维度分析 ══ -->
+<div class="stitle">🔬 三、多维度深度分析 <span>Multi-Dimension Analysis</span></div>
+
+<div class="tab-bar">
+  <button class="tb active" onclick="sw(this,'ta')">WMS子模块</button>
+  <button class="tb" onclick="sw(this,'tb2')">开发团队</button>
+  <button class="tb" onclick="sw(this,'tc2')">优先级 & AI</button>
+  <button class="tb" onclick="sw(this,'td')">关键变化对比</button>
+</div>
+
+<!-- WMS子模块 -->
+<div id="ta" class="tc active">
+<div class="g2">
+  <div class="card">
+    <div style="font-size:14px;font-weight:700;margin-bottom:14px">📦 WMS各子模块进度</div>
+    <table class="t">
+      <thead><tr><th>子模块</th><th>BA</th><th>总</th><th>Prod</th><th>Enh</th><th>Plan</th><th>完成率</th></tr></thead>
+      <tbody>
+        <tr><td>Receiving Module</td><td style="font-size:11px">Yuyang/Wesley</td><td>23</td><td>16</td><td>3</td><td>4</td><td><span class="rb rb-hi">83%</span></td></tr>
+        <tr><td>QC Module</td><td style="font-size:11px">Yuyang/Wesley</td><td>6</td><td>0</td><td>1</td><td>5</td><td><span class="rb rb-lo">17%</span></td></tr>
+        <tr><td>Inventory Management</td><td style="font-size:11px">Gus/Levent</td><td>12</td><td>6</td><td>0</td><td>6</td><td><span class="rb rb-mi">50%</span></td></tr>
+        <tr><td>Kit Management</td><td style="font-size:11px">Gus/Levent</td><td>4</td><td>2</td><td>0</td><td>2</td><td><span class="rb rb-mi">50%</span></td></tr>
+        <tr><td>Order Fulfillment</td><td style="font-size:11px">Liuwei/Wesley</td><td>22</td><td>17</td><td>5</td><td>0</td><td><span class="rb rb-hi">100%</span></td></tr>
+        <tr style="background:#fff7ed"><td>⚠ Adv. Picking &amp; Shipping</td><td style="font-size:11px">Jason/Wesley</td><td>32</td><td>3</td><td>0</td><td>29</td><td><span class="rb rb-lo">9%</span></td></tr>
+        <tr><td>Package Management</td><td style="font-size:11px">Jason/Wesley</td><td>4</td><td>0</td><td>0</td><td>4</td><td><span class="rb rb-lo">0%</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:10px;padding:9px 12px;background:#fff7ed;border-radius:7px;font-size:12px;color:#c2410c">
+      ⚠ Advanced Picking（Jason/Wesley）9%进度，32条中29条仍Planned，是WMS内最大风险点
+    </div>
+  </div>
+  <div class="card">
+    <div style="font-size:14px;font-weight:700;margin-bottom:14px">🏭 YMS子模块进度（Sep版大幅更新）</div>
+    <table class="t">
+      <thead><tr><th>子模块</th><th>总</th><th>Prod</th><th>Enh</th><th>New</th><th>状态</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td><b>Gate Management</b></td><td>5</td><td><span class="pill pp">5</span></td><td>0</td><td>0</td><td><span class="rb rb-hi">100%</span></td></tr>
+        <tr class="hl"><td><b>Dock Door Management</b></td><td>5</td><td><span class="pill pp">4</span></td><td><span class="pill pe">1</span></td><td>0</td><td><span class="rb rb-hi">100%</span></td></tr>
+        <tr><td>Appointment Scheduling</td><td>4</td><td><span class="pill pp">2</span></td><td><span class="pill pe">1</span></td><td><span class="pill pw">1</span></td><td><span class="rb rb-mi">75%</span></td></tr>
+        <tr><td>Integration Module</td><td>4</td><td><span class="pill pp">2</span></td><td><span class="pill pe">1</span></td><td><span class="pill pw">1</span></td><td><span class="rb rb-mi">75%</span></td></tr>
+        <tr><td>Mobile &amp; Driver Mgmt</td><td>4</td><td><span class="pill pp">2</span></td><td>0</td><td><span class="pill pw">2</span></td><td><span class="rb rb-mi">50%</span></td></tr>
+        <tr><td>Yard Inventory</td><td>5</td><td>0</td><td>0</td><td><span class="pill pw">5</span></td><td><span class="rb rb-nw">立项中</span></td></tr>
+        <tr><td>Yard Analytics</td><td>5</td><td>0</td><td><span class="pill pe">1</span></td><td><span class="pill pw">4</span></td><td><span class="rb rb-nw">立项中</span></td></tr>
+        <tr><td>Asset Tracking</td><td>4</td><td>0</td><td>0</td><td><span class="pill pw">4</span></td><td><span class="rb rb-nw">立项中</span></td></tr>
+        <tr><td>Yard Optimization</td><td>4</td><td>0</td><td>0</td><td><span class="pill pw">4</span></td><td><span class="rb rb-nw">立项中</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:10px;padding:9px 12px;background:var(--suc-l);border-radius:7px;font-size:12px;color:var(--suc)">
+      ✅ Gate+Dock全部Production，Q3已实质交付！Yard系列模块进入New（开始立项），产品范围扩展中
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- 开发团队 -->
+<div id="tb2" class="tc">
+<div class="card">
+  <div style="font-size:14px;font-weight:700;margin-bottom:14px">👥 各开发团队完成状态（Sep版）</div>
+  <table class="t">
+    <thead><tr><th>Dev Team</th><th>负责系统</th><th>总条目</th><th>Prod</th><th>Enh</th><th>Plan</th><th>New</th><th>完成率</th><th>评价</th></tr></thead>
+    <tbody>
+      <tr><td><b>崔翔 Linker</b></td><td>OMS + Integration</td><td>42</td><td><span class="pill pp">30</span></td><td><span class="pill pe">11</span></td><td>1</td><td>0</td><td><span class="rb rb-hi">98%</span></td><td><span class="cb cb-ok">🏆 最优秀</span></td></tr>
+      <tr><td><b>Quinn</b></td><td>WMS + RMS + Cyclelution</td><td>121</td><td><span class="pill pp">44</span></td><td><span class="pill pe">11</span></td><td>48</td><td><span class="pill pw">18</span></td><td><span class="rb rb-mi">45%</span></td><td><span class="cb cb-s">稳步推进</span></td></tr>
+      <tr style="background:#fff7ed"><td><b>Leyo</b></td><td>WES</td><td>40</td><td><span class="pill pp">12</span></td><td>0</td><td>28</td><td>0</td><td><span class="rb rb-mi">30%</span></td><td><span class="cb cb-w">↑ 较上版提升</span></td></tr>
+      <tr class="hl"><td><b>Yabin</b></td><td>APS + LMS + YMS + System</td><td>96</td><td><span class="pill pp">31</span></td><td><span class="pill pe">16</span></td><td>21</td><td><span class="pill pw">28</span></td><td><span class="rb rb-mi">49%</span></td><td><span class="cb cb-add">新接管·有进展</span></td></tr>
+      <tr><td><b>Eric BI</b></td><td>Reporting</td><td>15</td><td><span class="pill pp">7</span></td><td>0</td><td>8</td><td>0</td><td><span class="rb rb-mi">47%</span></td><td><span class="cb cb-s">平稳</span></td></tr>
+      <tr><td><b>Quinn + 任展 AI</b></td><td>AI-WMS</td><td>14</td><td>0</td><td>0</td><td>0</td><td><span class="pill pw">14</span></td><td><span class="rb rb-nw">新立项</span></td><td><span class="cb cb-add">全新模块</span></td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:12px;padding:10px 14px;background:var(--war-l);border-radius:8px;font-size:12px;color:var(--war)">
+    <b>⚠ 重点关注：</b>Leyo团队（WES）完成率8%，Q4需专项推进计划。Yabin团队接管YMS/APS/LMS/System共96条，YMS已取得实质进展（Gate Management全产Production）。
+  </div>
+</div>
+</div>
+
+<!-- 优先级 & AI -->
+<div id="tc2" class="tc">
+<div class="g2">
+  <div class="card">
+    <div style="font-size:14px;font-weight:700;margin-bottom:14px">⚡ 按优先级分布（Sep版）</div>
+    <table class="t">
+      <thead><tr><th>优先级</th><th>条目数</th><th>Production</th><th>Enhancement</th><th>Plan/New</th><th>兑现率</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill" style="background:#fef2f2;color:#dc2626">P0 核心</span></td><td>38</td><td><span class="pill pp">36</span></td><td>2</td><td>0</td><td><b style="color:var(--suc)">95%</b></td></tr>
+        <tr><td><span class="pill" style="background:#fff7ed;color:#c2410c">P1 重要</span></td><td>52</td><td><span class="pill pp">28</span></td><td><span class="pill pe">16</span></td><td>8</td><td><b style="color:var(--war)">85%</b></td></tr>
+        <tr><td><span class="pill" style="background:#fffbeb;color:#d97706">P2 一般</span></td><td>170</td><td><span class="pill pp">49</span></td><td><span class="pill pe">44</span></td><td>77</td><td><b style="color:var(--pri)">54%</b></td></tr>
+        <tr><td><span class="pill" style="background:var(--g100);color:var(--g500)">P3 低优</span></td><td>8</td><td>0</td><td>0</td><td>8</td><td><b style="color:var(--g500)">0%</b></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:10px;padding:9px 12px;background:var(--suc-l);border-radius:7px;font-size:12px;color:var(--suc)">
+      ✅ P0核心功能95%兑现，P1重要功能79%推进，优先级管理执行有效
+    </div>
+  </div>
+  <div class="card">
+    <div style="font-size:14px;font-weight:700;margin-bottom:14px">🤖 AI潜力分布（Sep版）</div>
+    <table class="t">
+      <thead><tr><th>AI潜力</th><th>条目数</th><th>代表功能</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill pw">Very High</span></td><td>22</td><td>AI-WMS全部 + ML路由优化 + 智能寻源</td></tr>
+        <tr><td><span class="pill pe">High</span></td><td>18</td><td>ATP/CTP + 安全库存 + WES资源优化</td></tr>
+        <tr><td><span class="pill pp">Medium</span></td><td>92</td><td>OMS/WMS大部分核心功能</td></tr>
+        <tr><td><span class="pill pn">Low</span></td><td>130</td><td>LMS/YMS/System/Reporting</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:10px;padding:9px 12px;background:var(--pur-l);border-radius:7px;font-size:12px;color:var(--pur)">
+      🤖 AI-WMS 14个功能已New状态，Warehouse Copilot标为Q2，AI能力建设已正式启动
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- 关键变化 -->
+<div id="td" class="tc">
+<div class="card">
+  <div style="font-size:14px;font-weight:700;margin-bottom:14px">🔄 Feb → Sep 关键变化对比（基于最新精确数据）</div>
+  <table class="t">
+    <thead><tr><th>变化类型</th><th>Feb版状态</th><th>Sep版（最新）</th><th>影响说明</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td><b>🏆 YMS大幅提升</b></td><td>全部Planned，0%</td><td>Production 15 + Enh 4 + New 21；Gate/Dock全部上线</td><td>Q3交付DIEV/LinkW/Chefman项目，已有实质性交付</td></tr>
+      <tr><td><b>YMS BA升级</b></td><td>Wangshuo（单人）</td><td>Liuwei/Wangshuo（联合负责）</td><td>LiuWei参与YMS管理，资源保障增强</td></tr>
+      <tr class="hl"><td><b>新增Jason/Wesley</b></td><td>Advanced Picking归WMS通用负责</td><td>Jason/Wesley专责，36条，当前9%</td><td>新接管BA，Q4需重点跟进</td></tr>
+      <tr><td><b>新增Enhancement分类</b></td><td>仅Production/Planned/New</td><td>新增Enhancement（62条）</td><td>状态粒度更细，OMS/WMS/YMS大量Planned→Enhancement</td></tr>
+      <tr class="hl"><td><b>OMS完成率跃升</b></td><td>大部分Planned</td><td>96%处于Prod/Enh</td><td>崔翔Linker团队最高效，成为全团队标杆</td></tr>
+      <tr><td><b>Integration 100%完成</b></td><td>全部Planned</td><td>15 Prod + 3 Enh，完成率100%</td><td>基础连通性全面就绪，EDI/API/Platform均Production</td></tr>
+      <tr class="hl"><td><b>WES持续滞后</b></td><td>仅1条Production</td><td>3条Production，37条仍Planned</td><td>Leyo团队8%，是全项目最大风险，Q4需专项计划</td></tr>
+      <tr><td><b>新系统立项</b></td><td>无</td><td>RMS(10) + Cyclelution(8) + AI-WMS(14)</td><td>新增32条，需评估Q4资源是否充足</td></tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<!-- ══ 四、BA分析 ══ -->
+<div class="stitle">👤 四、BA负责人工作量与进展 <span>BA Workload & Progress · Sep最新版</span></div>
+
+<div class="ibox">
+  <h4>📌 Sep版BA团队变化要点</h4>
+  <ul class="ilist">
+    <li>新增 <b>Jason/Wesley</b> 专责WMS Advanced Picking(32条)+Package(4条)=36条，为新接管BA，进度8%</li>
+    <li>YMS BA由Wangshuo → <b>Liuwei/Wangshuo联合</b>，YMS已有大量Production，与年初0%有本质区别</li>
+    <li>WMS Order Fulfillment BA为 <b>Liuwei/Wesley</b>（而非Yuyang），100%完成率，是WMS内最亮眼子模块</li>
+    <li>Yuyang/Wesley 专注Receiving+QC+System Config，Charles专注APS，分工更加清晰</li>
+  </ul>
+</div>
+
+<div class="ba-grid">
+
+  <!-- LiuWei/Wesley -->
+  <div class="bac">
+    <div class="bah">
+      <div class="bav" style="background:linear-gradient(135deg,#1a56db,#1e3a8a)">LW</div>
+      <div class="bai"><div class="ban">LiuWei / Wesley</div><div class="bat">OMS · Integration · WMS Order Fulfillment · YMS联合</div></div>
+      <div class="banum"><div class="bav2">~86</div><div class="bavl">总条目</div></div>
+    </div>
+    <div class="bab">
+      <div class="bml">
+        <div class="bmi"><div class="bmn">OMS（24条）</div><div class="bmw"><div class="bmb" style="width:100%;background:var(--pri)"></div></div><div class="bmc">24</div></div>
+        <div class="bmi"><div class="bmn">WMS Order Fulfillment（22条）</div><div class="bmw"><div class="bmb" style="width:100%;background:var(--pri)"></div></div><div class="bmc">22</div></div>
+        <div class="bmi"><div class="bmn">Integration（18条）</div><div class="bmw"><div class="bmb" style="width:83%;background:var(--pri)"></div></div><div class="bmc">18</div></div>
+        <div class="bmi"><div class="bmn">YMS联合（~22条）</div><div class="bmw"><div class="bmb" style="width:55%;background:var(--pri)"></div></div><div class="bmc">~22</div></div>
+      </div>
+      <div class="bsp"><span class="pill pp">Prod ~52</span><span class="pill pe">Enh ~22</span><span class="pill pn">Plan 5</span><span class="pill pw">New 7</span></div>
+      <div style="margin-top:7px;font-size:12px;color:var(--g500)">完成率: <b style="color:var(--suc)">~96%</b> · 全团队最高 🏆</div>
+    </div>
+  </div>
+
+  <!-- Yuyang/Wesley -->
+  <div class="bac">
+    <div class="bah">
+      <div class="bav" style="background:linear-gradient(135deg,#059669,#065f46)">YY</div>
+      <div class="bai"><div class="ban">Yuyang / Wesley</div><div class="bat">WMS Receiving · QC · System Config</div></div>
+      <div class="banum"><div class="bav2">49</div><div class="bavl">总条目</div></div>
+    </div>
+    <div class="bab">
+      <div class="bml">
+        <div class="bmi"><div class="bmn">Receiving Module（23条）</div><div class="bmw"><div class="bmb" style="width:100%;background:var(--suc)"></div></div><div class="bmc">23</div></div>
+        <div class="bmi"><div class="bmn">QC Module（6条）</div><div class="bmw"><div class="bmb" style="width:26%;background:var(--suc)"></div></div><div class="bmc">6</div></div>
+        <div class="bmi"><div class="bmn">System Config+Import（10条）</div><div class="bmw"><div class="bmb" style="width:43%;background:var(--suc)"></div></div><div class="bmc">10</div></div>
+      </div>
+      <div class="bsp"><span class="pill pp">Prod 20</span><span class="pill pe">Enh 10</span><span class="pill pn">Plan 19</span></div>
+      <div style="margin-top:7px;font-size:12px;color:var(--g500)">完成率: <b style="color:var(--war)">61%</b> · QC进度偏慢需关注</div>
+      <div><span class="ctag">Feb: YanJun → Sep: Yuyang</span></div>
+    </div>
+  </div>
+
+  <!-- Jason/Wesley 新增 -->
+  <div class="bac" style="border:2px solid #f59e0b">
+    <div class="bah">
+      <div class="bav" style="background:linear-gradient(135deg,#f59e0b,#d97706)">JW</div>
+      <div class="bai"><div class="ban">Jason / Wesley</div><div class="bat">WMS Adv.Picking · Package · Sep新接管</div></div>
+      <div class="banum"><div class="bav2">36</div><div class="bavl">总条目</div></div>
+    </div>
+    <div class="bab">
+      <div class="bml">
+        <div class="bmi"><div class="bmn">Advanced Picking &amp; Shipping（32条）</div><div class="bmw"><div class="bmb" style="width:100%;background:#f59e0b"></div></div><div class="bmc">32</div></div>
+        <div class="bmi"><div class="bmn">Package Management（4条）</div><div class="bmw"><div class="bmb" style="width:12%;background:#f59e0b"></div></div><div class="bmc">4</div></div>
+      </div>
+      <div class="bsp"><span class="pill pp">Prod 3</span><span class="pill pn">Plan 33</span></div>
+      <div style="margin-top:7px;font-size:12px;color:var(--g500)">完成率: <b style="color:var(--dan)">8%</b> · 新接管，Q4需提速</div>
+      <div><span class="ctag err">🆕 Sep新增BA，36条待推进</span></div>
+    </div>
+  </div>
+
+  <!-- Gus/Levent -->
+  <div class="bac">
+    <div class="bah">
+      <div class="bav" style="background:linear-gradient(135deg,#7c3aed,#5b21b6)">GL</div>
+      <div class="bai"><div class="ban">Gus / Levent</div><div class="bat">WMS Inventory · Kit Management</div></div>
+      <div class="banum"><div class="bav2">16</div><div class="bavl">总条目</div></div>
+    </div>
+    <div class="bab">
+      <div class="bml">
+        <div class="bmi"><div class="bmn">Inventory Management（12条）</div><div class="bmw"><div class="bmb" style="width:100%;background:#7c3aed"></div></div><div class="bmc">12</div></div>
+        <div class="bmi"><div class="bmn">Kit Management（4条）</div><div class="bmw"><div class="bmb" style="width:50%;background:#7c3aed"></div></div><div class="bmc">4</div></div>
+      </div>
+      <div class="bsp"><span class="pill pp">Prod 8</span><span class="pill pn">Plan 8</span></div>
+      <div style="margin-top:7px;font-size:12px;color:var(--g500)">完成率: <b style="color:var(--war)">50%</b> · 进度稳定 ✅</div>
+    </div>
+  </div>
+
+  <!-- Levent/ZhongLiang -->
+  <div class="bac">
+    <div class="bah">
+      <div class="bav" style="background:linear-gradient(135deg,#0891b2,#164e63)">LZ</div>
+      <div class="bai"><div class="ban">Levent / ZhongLiang</div><div class="bat">WES 仓库执行系统（全部40条）</div></div>
+      <div class="banum"><div class="bav2">40</div><div class="bavl">总条目</div></div>
+    </div>
+    <div class="bab">
+      <div class="bml">
+        <div class="bmi"><div class="bmn">Workload Balancing（3条Prod+1Planned）</div><div class="bmw"><div class="bmb" style="width:75%;background:var(--tea)"></div></div><div class="bmc">4</div></div>
+        <div class="bmi"><div class="bmn">Task Prioritization（3条Prod+1Planned）</div><div class="bmw"><div class="bmb" style="width:75%;background:var(--tea)"></div></div><div class="bmc">4</div></div>
+        <div class="bmi"><div class="bmn">Automation Control（3条Prod+4Planned）</div><div class="bmw"><div class="bmb" style="width:43%;background:var(--tea)"></div></div><div class="bmc">7</div></div>
+        <div class="bmi"><div class="bmn">Automated Routing（1条Prod+3Planned）</div><div class="bmw"><div class="bmb" style="width:25%;background:var(--tea)"></div></div><div class="bmc">4</div></div>
+        <div class="bmi"><div class="bmn">其余5模块（全部Planned）</div><div class="bmw"><div class="bmb" style="width:0%;background:var(--tea)"></div></div><div class="bmc">21</div></div>
+      </div>
+      <div class="bsp"><span class="pill pp">Prod 12</span><span class="pill pn">Plan 28</span></div>
+      <div style="margin-top:7px;font-size:12px;color:var(--g500)">完成率: <b style="color:var(--war)">30%</b> · 较上版8%大幅提升 📈</div>
+      <div><span class="ctag ok">✅ 8% → 30%，WES加速交付中</span></div>
+    </div>
+  </div>
+
+  <!-- Charles -->
+  <div class="bac">
+    <div class="bah">
+      <div class="bav" style="background:linear-gradient(135deg,#ea580c,#c2410c)">CH</div>
+      <div class="bai"><div class="ban">Charles</div><div class="bat">APS 劳动绩效系统（新接管）</div></div>
+      <div class="banum"><div class="bav2">24</div><div class="bavl">总条目</div></div>
+    </div>
+    <div class="bab">
+      <div class="bml">
+        <div class="bmi"><div class="bmn">Workforce Planning（4条）</div><div class="bmw"><div class="bmb" style="width:100%;background:var(--ora)"></div></div><div class="bmc">4</div></div>
+        <div class="bmi"><div class="bmn">Real-Time Labor Tracking（4条）</div><div class="bmw"><div class="bmb" style="width:75%;background:var(--ora)"></div></div><div class="bmc">4</div></div>
+        <div class="bmi"><div class="bmn">KPI Dashboards（4条）</div><div class="bmw"><div class="bmb" style="width:75%;background:var(--ora)"></div></div><div class="bmc">4</div></div>
+        <div class="bmi"><div class="bmn">其余3模块（12条）</div><div class="bmw"><div class="bmb" style="width:0%;background:var(--ora)"></div></div><div class="bmc">12</div></div>
+      </div>
+      <div class="bsp"><span class="pill pp">Prod 5</span><span class="pill pe">Enh 7</span><span class="pill pn">Plan 12</span></div>
+      <div style="margin-top:7px;font-size:12px;color:var(--g500)">完成率: <b style="color:var(--war)">50%</b> · 新接管，合理</div>
+      <div><span class="ctag">Feb: Eddie → Sep: Charles</span></div>
+    </div>
+  </div>
+
+  <!-- Lipeijia -->
+  <div class="bac">
+    <div class="bah">
+      <div class="bav" style="background:linear-gradient(135deg,#ec4899,#9d174d)">LP</div>
+      <div class="bai"><div class="ban">Lipeijia</div><div class="bat">LMS · System User & Portal</div></div>
+      <div class="banum"><div class="bav2">17</div><div class="bavl">总条目</div></div>
+    </div>
+    <div class="bab">
+      <div class="bml">
+        <div class="bmi"><div class="bmn">System User Management（5条）</div><div class="bmw"><div class="bmb" style="width:100%;background:#ec4899"></div></div><div class="bmc">5</div></div>
+        <div class="bmi"><div class="bmn">LMS Integration Module（4条）</div><div class="bmw"><div class="bmb" style="width:75%;background:#ec4899"></div></div><div class="bmc">4</div></div>
+        <div class="bmi"><div class="bmn">LMS Compliance（4条）</div><div class="bmw"><div class="bmb" style="width:50%;background:#ec4899"></div></div><div class="bmc">4</div></div>
+        <div class="bmi"><div class="bmn">LMS Gamification（4条）</div><div class="bmw"><div class="bmb" style="width:0%;background:#ec4899"></div></div><div class="bmc">4</div></div>
+      </div>
+      <div class="bsp"><span class="pill pp">Prod 10</span><span class="pill pn">Plan 4</span><span class="pill pw">New 3</span></div>
+      <div style="margin-top:7px;font-size:12px;color:var(--g500)">完成率: <b style="color:var(--war)">59%</b> · 进度合理 ✅</div>
+      <div><span class="ctag">Feb: BA Name → Sep: Lipeijia</span></div>
+    </div>
+  </div>
+
+  <!-- Liuwei/Wangshuo (YMS) -->
+  <div class="bac" style="border:1px solid #6ee7b7">
+    <div class="bah">
+      <div class="bav" style="background:linear-gradient(135deg,#06b6d4,#0e7490)">LWS</div>
+      <div class="bai"><div class="ban">Liuwei / Wangshuo</div><div class="bat">YMS 院场管理系统（联合负责）</div></div>
+      <div class="banum"><div class="bav2">40</div><div class="bavl">总条目</div></div>
+    </div>
+    <div class="bab">
+      <div class="bml">
+        <div class="bmi"><div class="bmn">Gate Management（5条）</div><div class="bmw"><div class="bmb" style="width:100%;background:#06b6d4"></div></div><div class="bmc">5</div></div>
+        <div class="bmi"><div class="bmn">Dock Door Management（5条）</div><div class="bmw"><div class="bmb" style="width:100%;background:#06b6d4"></div></div><div class="bmc">5</div></div>
+        <div class="bmi"><div class="bmn">Appointment+Integration+Mobile（12条）</div><div class="bmw"><div class="bmb" style="width:58%;background:#06b6d4"></div></div><div class="bmc">12</div></div>
+        <div class="bmi"><div class="bmn">Yard Inventory/Analytics/Optimization（18条）</div><div class="bmw"><div class="bmb" style="width:6%;background:#06b6d4"></div></div><div class="bmc">18</div></div>
+      </div>
+      <div class="bsp"><span class="pill pp">Prod 15</span><span class="pill pe">Enh 4</span><span class="pill pw">New 21</span></div>
+      <div style="margin-top:7px;font-size:12px;color:var(--g500)">Production率: <b style="color:var(--suc)">38%</b> · 从0%大幅提升 🎉</div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap"><span class="ctag ok">✅ 年初0% → 现38%</span><span class="ctag">Wangshuo→Liuwei/Wangshuo</span></div>
+    </div>
+  </div>
+
+  <!-- Weinan/Wesley -->
+  <div class="bac">
+    <div class="bah">
+      <div class="bav" style="background:linear-gradient(135deg,#10b981,#047857)">WN</div>
+      <div class="bai"><div class="ban">Weinan / Wesley</div><div class="bat">Reporting · BI数据分析</div></div>
+      <div class="banum"><div class="bav2">15</div><div class="bavl">总条目</div></div>
+    </div>
+    <div class="bab">
+      <div class="bml">
+        <div class="bmi"><div class="bmn">Inventory Reporting（5条）</div><div class="bmw"><div class="bmb" style="width:20%;background:#10b981"></div></div><div class="bmc">5</div></div>
+        <div class="bmi"><div class="bmn">Operations Reporting（5条）</div><div class="bmw"><div class="bmb" style="width:80%;background:#10b981"></div></div><div class="bmc">5</div></div>
+        <div class="bmi"><div class="bmn">Performance Analytics（5条）</div><div class="bmw"><div class="bmb" style="width:60%;background:#10b981"></div></div><div class="bmc">5</div></div>
+      </div>
+      <div class="bsp"><span class="pill pp">Prod 7</span><span class="pill pn">Plan 8</span></div>
+      <div style="margin-top:7px;font-size:12px;color:var(--g500)">完成率: <b style="color:var(--war)">47%</b> · 进度平稳 ✅</div>
+      <div><span class="ctag">Feb: BA Name → Sep: Weinan/Wesley</span></div>
+    </div>
+  </div>
+
+  <!-- Wesley (RMS+Cyclelution) -->
+  <div class="bac">
+    <div class="bah">
+      <div class="bav" style="background:linear-gradient(135deg,#8b5cf6,#4c1d95)">WE</div>
+      <div class="bai"><div class="ban">Wesley</div><div class="bat">RMS 退换货 · Cyclelution eWaste</div></div>
+      <div class="banum"><div class="bav2">18</div><div class="bavl">总条目</div></div>
+    </div>
+    <div class="bab">
+      <div class="bml">
+        <div class="bmi"><div class="bmn">RMS Returns Management（10条）</div><div class="bmw"><div class="bmb" style="width:100%;background:#8b5cf6"></div></div><div class="bmc">10</div></div>
+        <div class="bmi"><div class="bmn">Cyclelution eWaste（8条）</div><div class="bmw"><div class="bmb" style="width:80%;background:#8b5cf6"></div></div><div class="bmc">8</div></div>
+      </div>
+      <div class="bsp"><span class="pill pw">New 18（全新立项）</span></div>
+      <div style="margin-top:7px;font-size:12px;color:var(--g500)">状态: <b style="color:var(--pur)">Q3/Q4新模块规划中</b> 🚀</div>
+    </div>
+  </div>
+
+  <!-- Matthew -->
+  <div class="bac">
+    <div class="bah">
+      <div class="bav" style="background:linear-gradient(135deg,#f43f5e,#881337)">MA</div>
+      <div class="bai"><div class="ban">Matthew</div><div class="bat">AI-WMS · 智能仓储 · 数字孪生</div></div>
+      <div class="banum"><div class="bav2">14</div><div class="bavl">总条目</div></div>
+    </div>
+    <div class="bab">
+      <div class="bml">
+        <div class="bmi"><div class="bmn">Copilot / Agent / Planning（3条）</div><div class="bmw"><div class="bmb" style="width:43%;background:#f43f5e"></div></div><div class="bmc">3</div></div>
+        <div class="bmi"><div class="bmn">Forecasting / Quality / Labor（3条）</div><div class="bmw"><div class="bmb" style="width:43%;background:#f43f5e"></div></div><div class="bmc">3</div></div>
+        <div class="bmi"><div class="bmn">CV / Voice / Yard / Digital Twin（4条）</div><div class="bmw"><div class="bmb" style="width:43%;background:#f43f5e"></div></div><div class="bmc">4</div></div>
+        <div class="bmi"><div class="bmn">Industry Vertical / Workflow（2条）</div><div class="bmw"><div class="bmb" style="width:14%;background:#f43f5e"></div></div><div class="bmc">2</div></div>
+      </div>
+      <div class="bsp"><span class="pill pw">New 14（复杂度 Very High）</span></div>
+      <div style="margin-top:7px;font-size:12px;color:var(--g500)">状态: <b style="color:var(--pur)">Q3立项 · Q4开发</b> 🤖</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ 五、BA汇总表 ══ -->
+<div class="stitle">📋 五、BA工作量汇总表 <span>BA Summary Table · Sep精确版</span></div>
+<div class="card">
+  <table class="t">
+    <thead>
+      <tr><th>BA负责人</th><th>负责系统</th><th>总条目</th><th>Prod</th><th>Enh</th><th>Plan</th><th>New</th><th>完成率</th><th>变化</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><b>LiuWei / Wesley</b></td><td>OMS + Integration + WMS Order Fulfillment + YMS联合</td><td>~86 <span style="color:var(--g500);font-size:10px">(30%)</span></td><td><span class="pill pp">~52</span></td><td><span class="pill pe">~22</span></td><td>5</td><td>7</td><td><b style="color:var(--suc)">~96%</b></td><td><span class="cb cb-ok">🏆最优</span></td></tr>
+      <tr><td><b>Yuyang / Wesley</b></td><td>WMS Receiving + QC + System Config</td><td>49 <span style="color:var(--g500);font-size:10px">(17%)</span></td><td><span class="pill pp">20</span></td><td><span class="pill pe">10</span></td><td>19</td><td>0</td><td><b style="color:var(--war)">61%</b></td><td><span class="cb cb-add">YanJun→Yuyang</span></td></tr>
+      <tr class="hl"><td><b>Jason / Wesley</b></td><td>WMS Adv.Picking + Package</td><td>36 <span style="color:var(--g500);font-size:10px">(13%)</span></td><td><span class="pill pp">3</span></td><td>0</td><td>33</td><td>0</td><td><b style="color:var(--dan)">8% ⚠</b></td><td><span class="cb cb-add">Sep新增BA</span></td></tr>
+      <tr><td><b>Gus / Levent</b></td><td>WMS Inventory + Kit</td><td>16 <span style="color:var(--g500);font-size:10px">(6%)</span></td><td><span class="pill pp">8</span></td><td>0</td><td>8</td><td>0</td><td><b style="color:var(--war)">50%</b></td><td><span class="cb cb-s">稳定</span></td></tr>
+      <tr><td><b>Levent / ZhongLiang</b></td><td>WES（全部）</td><td>40 <span style="color:var(--g500);font-size:10px">(14%)</span></td><td><span class="pill pp">12</span></td><td>0</td><td>28</td><td>0</td><td><b style="color:var(--war)">30% 📈</b></td><td><span class="cb cb-ok">8%→30%提升</span></td></tr>
+      <tr><td><b>Charles</b></td><td>APS 劳动绩效（原LMS劳动管理功能独立）</td><td>24 <span style="color:var(--g500);font-size:10px">(9%)</span></td><td><span class="pill pp">5</span></td><td><span class="pill pe">7</span></td><td>12</td><td>0</td><td><b style="color:var(--war)">50%</b></td><td><span class="cb cb-add">Eddie→Charles</span></td></tr>
+      <tr><td><b>Lipeijia</b></td><td>LMS + System User/Portal</td><td>17 <span style="color:var(--g500);font-size:10px">(6%)</span></td><td><span class="pill pp">10</span></td><td>0</td><td>4</td><td><span class="pill pw">3</span></td><td><b style="color:var(--war)">59%</b></td><td><span class="cb cb-add">BA Name→Lipeijia</span></td></tr>
+      <tr class="hl"><td><b>Liuwei / Wangshuo</b></td><td>YMS（联合负责）</td><td>40 <span style="color:var(--g500);font-size:10px">(14%)</span></td><td><span class="pill pp">15</span></td><td><span class="pill pe">4</span></td><td>0</td><td><span class="pill pw">21</span></td><td><b style="color:var(--suc)">38% 🎉</b></td><td><span class="cb cb-ok">0%→38%大幅提升</span></td></tr>
+      <tr><td><b>Weinan / Wesley</b></td><td>Reporting / BI</td><td>15 <span style="color:var(--g500);font-size:10px">(5%)</span></td><td><span class="pill pp">7</span></td><td>0</td><td>8</td><td>0</td><td><b style="color:var(--war)">47%</b></td><td><span class="cb cb-add">BA Name→Weinan</span></td></tr>
+      <tr><td><b>Wesley</b> <span style="font-size:10px;color:var(--g500)">（老员工）</span></td><td>RMS + Cyclelution 新立项</td><td>18 <span style="color:var(--g500);font-size:10px">(6%)</span></td><td>0</td><td>0</td><td>0</td><td><span class="pill pw">18</span></td><td><b style="color:var(--pur)">新立项</b></td><td><span class="cb cb-add">新增模块</span></td></tr>
+      <tr><td><b>Matthew</b></td><td>AI-WMS</td><td>14 <span style="color:var(--g500);font-size:10px">(5%)</span></td><td>0</td><td>0</td><td>0</td><td><span class="pill pw">14</span></td><td><b style="color:var(--pur)">新立项</b></td><td><span class="cb cb-add">新增模块</span></td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:14px;padding:10px 14px;background:var(--war-l);border-radius:8px;font-size:12px;color:var(--war)">
+    <b>⚠ 需重点关注：</b>Jason/Wesley（WMS Adv.Picking 8%，36条待推进）。WES（Levent/ZhongLiang）已从8%提升至30%，方向正确，Q4继续提速。
+  </div>
+</div>
+
+<!-- ══ 六、结论与建议 ══ -->
+<div class="stitle">💡 六、核心结论与行动建议 <span>Key Insights & Recommendations</span></div>
+<div class="g3">
+  <div class="card" style="border-top:3px solid var(--suc)">
+    <div style="font-size:13px;font-weight:700;color:var(--suc);margin-bottom:10px">✅ 表现亮眼</div>
+    <ul style="padding-left:16px;font-size:13px;color:var(--g700);display:flex;flex-direction:column;gap:6px">
+      <li>P0核心功能兑现率 <b>95%</b>，核心交付有保障</li>
+      <li>OMS完成率 <b>96%</b>，崔翔Linker团队最优秀</li>
+      <li>Integration完成率 <b>100%</b>，基础连通性全就绪</li>
+      <li>YMS从0%跃升至 <b>38% Production</b>，有实质交付</li>
+      <li>新增Enhancement精细分类，管理透明度提升</li>
+      <li>AI-WMS / RMS / Cyclelution 战略性立项</li>
+    </ul>
+  </div>
+  <div class="card" style="border-top:3px solid var(--dan)">
+    <div style="font-size:13px;font-weight:700;color:var(--dan);margin-bottom:10px">🚨 重点关注</div>
+    <ul style="padding-left:16px;font-size:13px;color:var(--g700);display:flex;flex-direction:column;gap:6px">
+      <li>WES（Leyo）进度 <b>8%</b>，40条中37条Planned</li>
+      <li>Advanced Picking（Jason新接管）<b>8%</b>，32条待推进</li>
+      <li>QC Module（Yuyang）<b>17%</b>，5条QC功能未启动</li>
+      <li>Reporting（50%）仍有8条Planned待推进</li>
+      <li>AI-WMS 14条复杂度Very High，Q4资源需评估</li>
+    </ul>
+  </div>
+  <div class="card" style="border-top:3px solid var(--pri)">
+    <div style="font-size:13px;font-weight:700;color:var(--pri);margin-bottom:10px">📌 Q4行动建议</div>
+    <ul style="padding-left:16px;font-size:13px;color:var(--g700);display:flex;flex-direction:column;gap:6px">
+      <li>WES制定Q4专项冲刺计划，设关键里程碑</li>
+      <li>Jason快速熟悉Advanced Picking业务，启动P0/P1项</li>
+      <li>AI-WMS进入详细需求评审，分批落地</li>
+      <li>将Enhancement条目推动上线，提升整体完成率</li>
+      <li>Reporting剩余8条按优先级排入Q4迭代</li>
+      <li>YMS Yard系列（21条New）尽快进入设计阶段</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+<!-- ══ 八、各季度进展汇总 ══ -->
+<div class="stitle">📅 八、各季度进展汇总 <span>Quarterly Progress Summary · Q1→Q4 2026</span></div>
+
+<div class="ibox">
+  <h4>📌 季度说明</h4>
+  <ul class="ilist">
+    <li>Phase字段代表功能计划交付季度；Feb版为原始规划，Sep版反映实际执行进度</li>
+    <li>Q2功能为核心交付批次，上线率最高；Q3为最大批次，状态最混合；Q4为新立项功能</li>
+    <li>当前时间点（2026 Q3末），Q2功能应已全部Production，Q3功能正在推进中</li>
+  </ul>
+</div>
+
+<!-- 季度时间线 -->
+<div class="card" style="margin-bottom:20px">
+  <div style="font-size:14px;font-weight:700;margin-bottom:16px">⏱ 2026年度开发时间线进度</div>
+  <div style="display:flex;height:12px;border-radius:6px;overflow:hidden;margin-bottom:10px;gap:2px">
+    <div style="width:15%;background:#057a55;border-radius:4px 0 0 4px" title="Q1"></div>
+    <div style="width:25%;background:#1a56db" title="Q2"></div>
+    <div style="width:42%;background:#c27803;position:relative" title="Q3 当前">
+      <div style="position:absolute;right:-6px;top:-4px;width:20px;height:20px;background:#3fb950;border-radius:50%;border:3px solid #f0f4f8;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;font-weight:700">▶</div>
+    </div>
+    <div style="width:18%;background:var(--g200);border-radius:0 4px 4px 0" title="Q4"></div>
+  </div>
+  <div style="display:flex;font-size:11px;color:var(--g500);margin-bottom:20px">
+    <span style="width:15%">Q1 基础建设</span>
+    <span style="width:25%">Q2 核心交付</span>
+    <span style="width:42%;color:var(--war);font-weight:600">Q3 当前阶段 ▶ 大规模推进</span>
+    <span style="width:18%">Q4 新模块</span>
+  </div>
+
+  <!-- 四个季度卡片 -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+
+    <!-- Q1 -->
+    <div style="background:var(--g50);border-radius:10px;padding:16px;border-left:3px solid #057a55">
+      <div style="font-size:13px;font-weight:700;color:#057a55;margin-bottom:8px">Q1 2026</div>
+      <div style="font-size:11px;color:var(--g500);margin-bottom:10px">基础建设 · 已完成</div>
+      <div style="font-size:12px;color:var(--g700);margin-bottom:6px">涉及功能条目</div>
+      <div style="font-size:22px;font-weight:800;color:#057a55">~5</div>
+      <div style="font-size:11px;color:var(--g500);margin-top:4px">主要为System SSO等基础功能</div>
+      <div style="margin-top:8px">
+        <span class="pill pp" style="font-size:10px">全部Production</span>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div style="background:var(--g50);border-radius:10px;padding:16px;border-left:3px solid var(--pri)">
+      <div style="font-size:13px;font-weight:700;color:var(--pri);margin-bottom:8px">Q2 2026</div>
+      <div style="font-size:11px;color:var(--g500);margin-bottom:10px">核心交付 · 已完成</div>
+      <div style="font-size:12px;color:var(--g700);margin-bottom:4px">计划条目 → 实际状态</div>
+      <div style="font-size:22px;font-weight:800;color:var(--pri)">57</div>
+      <div style="font-size:11px;color:var(--g500)">涉及条目（占总量20%）</div>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px">
+        <div style="display:flex;justify-content:space-between;font-size:11px">
+          <span>Production</span><span style="color:var(--suc);font-weight:700">52条（91%）</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px">
+          <span>Enhancement</span><span style="color:var(--war);font-weight:700">5条（9%）</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px">
+          <span>Planned</span><span style="color:var(--g500);font-weight:700">0条</span>
+        </div>
+      </div>
+      <div style="margin-top:8px;padding:6px 8px;background:var(--suc-l);border-radius:6px;font-size:11px;color:var(--suc)">
+        ✅ Q2交付率91%，核心功能全部上线
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div style="background:var(--g50);border-radius:10px;padding:16px;border-left:3px solid var(--war)">
+      <div style="font-size:13px;font-weight:700;color:var(--war);margin-bottom:8px">Q3 2026 ▶ 当前</div>
+      <div style="font-size:11px;color:var(--g500);margin-bottom:10px">大规模推进 · 进行中</div>
+      <div style="font-size:12px;color:var(--g700);margin-bottom:4px">计划条目 → 实际状态</div>
+      <div style="font-size:22px;font-weight:800;color:var(--war)">188</div>
+      <div style="font-size:11px;color:var(--g500)">涉及条目（占总量67%）</div>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px">
+        <div style="display:flex;justify-content:space-between;font-size:11px">
+          <span>Production</span><span style="color:var(--suc);font-weight:700">61条（32%）</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px">
+          <span>Enhancement</span><span style="color:var(--war);font-weight:700">57条（30%）</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px">
+          <span>Planned</span><span style="color:var(--pri);font-weight:700">38条（20%）</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px">
+          <span>New</span><span style="color:var(--pur);font-weight:700">32条（17%）</span>
+        </div>
+      </div>
+      <div style="margin-top:8px;padding:6px 8px;background:var(--war-l);border-radius:6px;font-size:11px;color:var(--war)">
+        ⚡ Q3完成62%（Prod+Enh），38条仍待推进
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div style="background:var(--g50);border-radius:10px;padding:16px;border-left:3px solid var(--pur)">
+      <div style="font-size:13px;font-weight:700;color:var(--pur);margin-bottom:8px">Q4 2026</div>
+      <div style="font-size:11px;color:var(--g500);margin-bottom:10px">新模块 · 规划中</div>
+      <div style="font-size:12px;color:var(--g700);margin-bottom:4px">计划条目 → 实际状态</div>
+      <div style="font-size:22px;font-weight:800;color:var(--pur)">32</div>
+      <div style="font-size:11px;color:var(--g500)">涉及条目（占总量11%）</div>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px">
+        <div style="display:flex;justify-content:space-between;font-size:11px">
+          <span>Production</span><span style="color:var(--g500);font-weight:700">0条</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px">
+          <span>New（待启动）</span><span style="color:var(--pur);font-weight:700">8条（Cyclelution）</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px">
+          <span>Planned（Q4滑入）</span><span style="color:var(--pri);font-weight:700">24条（Inventory等）</span>
+        </div>
+      </div>
+      <div style="margin-top:8px;padding:6px 8px;background:var(--pur-l);border-radius:6px;font-size:11px;color:var(--pur)">
+        🚀 Q4以Cyclelution+Inventory延期项为主
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Q3详细拆解 -->
+<div class="card" style="margin-bottom:20px">
+  <div style="font-size:14px;font-weight:700;margin-bottom:16px">🔎 Q3详细拆解（当前阶段 · 188条）</div>
+  <table class="t">
+    <thead>
+      <tr>
+        <th>系统</th>
+        <th>Q3条目</th>
+        <th>Production</th>
+        <th>Enhancement</th>
+        <th>Planned</th>
+        <th>New</th>
+        <th>Q3完成率</th>
+        <th>相比Feb规划</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><b>OMS</b></td><td>15</td><td><span class="pill pp">7</span></td><td><span class="pill pe">7</span></td><td>1</td><td>0</td><td><span class="rb rb-hi">93%</span></td><td style="color:var(--suc);font-size:11px">✅ 超预期，全部推进</td></tr>
+      <tr><td><b>WMS</b></td><td>78</td><td><span class="pill pp">29</span></td><td><span class="pill pe">14</span></td><td>35</td><td>0</td><td><span class="rb rb-mi">55%</span></td><td style="color:var(--war);font-size:11px">⚡ Adv.Picking进度偏慢</td></tr>
+      <tr style="background:#fff7ed"><td><b>WES</b></td><td>37</td><td><span class="pill pp">11</span></td><td>0</td><td>26</td><td>0</td><td><span class="rb rb-mi">30%</span></td><td style="color:var(--war);font-size:11px">⚡ 较Feb大幅提升但仍滞后</td></tr>
+      <tr><td><b>APS</b></td><td>24</td><td><span class="pill pp">5</span></td><td><span class="pill pe">7</span></td><td>12</td><td>0</td><td><span class="rb rb-mi">50%</span></td><td style="color:var(--g500);font-size:11px">新BA接管中</td></tr>
+      <tr><td><b>LMS</b></td><td>9</td><td><span class="pill pp">5</span></td><td>0</td><td>1</td><td><span class="pill pw">3</span></td><td><span class="rb rb-hi">56%</span></td><td style="color:var(--g500);font-size:11px">含New状态</td></tr>
+      <tr class="hl"><td><b>YMS</b></td><td>40</td><td><span class="pill pp">15</span></td><td><span class="pill pe">4</span></td><td>0</td><td><span class="pill pw">21</span></td><td><span class="rb rb-mi">48%</span></td><td style="color:var(--suc);font-size:11px">✅ 从0%→48%最大进步</td></tr>
+      <tr><td><b>Integration</b></td><td>18</td><td><span class="pill pp">15</span></td><td><span class="pill pe">3</span></td><td>0</td><td>0</td><td><span class="rb rb-hi">100%</span></td><td style="color:var(--suc);font-size:11px">✅ 全部完成</td></tr>
+      <tr><td><b>System</b></td><td>14</td><td><span class="pill pp">5</span></td><td><span class="pill pe">9</span></td><td>0</td><td>0</td><td><span class="rb rb-hi">100%</span></td><td style="color:var(--suc);font-size:11px">✅ 全部完成</td></tr>
+      <tr><td><b>Reporting</b></td><td>8</td><td>0</td><td>0</td><td>8</td><td>0</td><td><span class="rb rb-lo">0%</span></td><td style="color:var(--dan);font-size:11px">⚠ 全部未启动</td></tr>
+      <tr><td><b>RMS</b></td><td>10</td><td>0</td><td>0</td><td>0</td><td><span class="pill pw">10</span></td><td><span class="rb rb-nw">新立项</span></td><td style="color:var(--g500);font-size:11px">新增模块</td></tr>
+      <tr><td><b>AI-WMS</b></td><td>14</td><td>0</td><td>0</td><td>0</td><td><span class="pill pw">14</span></td><td><span class="rb rb-nw">新立项</span></td><td style="color:var(--g500);font-size:11px">新增模块</td></tr>
+      <tr style="background:var(--g50);font-weight:700">
+        <td>Q3合计</td><td>188</td>
+        <td><span class="pill pp">92</span></td>
+        <td><span class="pill pe">44</span></td>
+        <td>83</td>
+        <td><span class="pill pw">48</span></td>
+        <td><span class="rb rb-mi">62%</span></td>
+        <td style="font-size:11px;color:var(--g500)">Q3末综合完成率</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Q2回顾 -->
+<div class="card">
+  <div style="font-size:14px;font-weight:700;margin-bottom:16px">✅ Q2交付回顾（已完成 · 57条 · 完成率91%）</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+    <div style="padding:12px;background:var(--suc-l);border-radius:8px">
+      <div style="font-size:12px;font-weight:700;color:var(--suc);margin-bottom:8px">OMS Q2（8条）</div>
+      <div style="font-size:11px;color:var(--g700);line-height:1.7">
+        Order lifecycle management ✅<br>
+        Multi-channel orchestration ✅<br>
+        Real-time order tracking ✅<br>
+        Order modification ✅<br>
+        Alert management ✅<br>
+        Inbound/Outbound delivery ✅<br>
+        SSO setup ✅
+      </div>
+    </div>
+    <div style="padding:12px;background:#e0f2fe;border-radius:8px">
+      <div style="font-size:12px;font-weight:700;color:#0369a1;margin-bottom:8px">WMS Q2（38条核心）</div>
+      <div style="font-size:11px;color:var(--g700);line-height:1.7">
+        Receiving of orders ✅<br>
+        Multiple receipt types ✅<br>
+        Appointment/Dock scheduling ✅<br>
+        Label verification ✅<br>
+        Mobile scanner support ✅<br>
+        Wave management ✅<br>
+        On-demand replenishment ✅<br>
+        <span style="color:var(--g500)">...共计38条</span>
+      </div>
+    </div>
+    <div style="padding:12px;background:var(--pur-l);border-radius:8px">
+      <div style="font-size:12px;font-weight:700;color:var(--pur);margin-bottom:8px">WES/System Q2（11条）</div>
+      <div style="font-size:11px;color:var(--g700);line-height:1.7">
+        WES: Order release execution ✅<br>
+        WES: WMS integration ✅<br>
+        WES: AGV integration ✅<br>
+        System: SSO setup ✅<br>
+        Reporting: Inventory movement ✅<br>
+        Reporting: KPI dashboards ✅<br>
+        Reporting: Custom report builder ✅<br>
+        <span style="color:var(--g500)">...共计11条</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="stitle">🔀 七、BA人员变动专项分析 <span>BA Change Analysis · Feb vs Sep</span></div>
+
+<div class="ibox">
+  <h4>📌 BA团队变化总览（Feb → Sep）</h4>
+  <ul class="ilist">
+    <li>Feb版共 <strong>8位BA</strong>（含"BA Name"占位符）；Sep版升至 <strong>11位真实BA</strong>，团队规模扩大</li>
+    <li>新增3位BA：<strong>Jason/Wesley</strong>（WMS Adv.Picking）、<strong>Wangshuo</strong>（YMS联合）、<strong>Weinan/Wesley</strong>（Reporting）</li>
+    <li>4处人员交接：YanJun→Yuyang、Eddie→Charles（APS）、Eddie→Wangshuo（YMS）、BA Name→Lipeijia+Weinan</li>
+    <li>LiuWei/Wesley 职责最大扩展：新增 WMS Order Fulfillment（22条）+ YMS联合管理，总负责条目从45→约86条</li>
+    <li>原LMS模块（Eddie负责）拆分为 <strong>APS</strong>（Charles，28条）+ <strong>LMS</strong>（Lipeijia，12条），职责更清晰</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div style="font-size:14px;font-weight:700;margin-bottom:18px">👥 BA人员变动对比表（Feb → Sep 逐人对比）</div>
+  <table class="t">
+    <thead>
+      <tr>
+        <th>Feb版 BA</th>
+        <th>Feb条目数</th>
+        <th>Feb负责系统</th>
+        <th>→ 变化</th>
+        <th>Sep版 BA</th>
+        <th>Sep条目数</th>
+        <th>Sep负责系统</th>
+        <th>条目变化</th>
+        <th>变化类型</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>LiuWei / Wesley</strong></td>
+        <td>45</td>
+        <td style="font-size:11px">OMS + Integration</td>
+        <td style="text-align:center;font-size:18px;color:var(--war)">→</td>
+        <td><strong>LiuWei / Wesley</strong></td>
+        <td><strong>~86</strong></td>
+        <td style="font-size:11px">OMS + Integration + WMS Order Fulfillment + YMS联合</td>
+        <td><span style="color:var(--suc);font-weight:700">+41</span></td>
+        <td><span class="cb cb-ok">职责扩大</span></td>
+      </tr>
+      <tr class="hl">
+        <td><strong>YanJun / Wesley</strong></td>
+        <td>~55</td>
+        <td style="font-size:11px">WMS Receiving/QC/Order/Picking/Package</td>
+        <td style="text-align:center;font-size:18px;color:var(--dan)">↓</td>
+        <td><strong>Yuyang / Wesley</strong></td>
+        <td>49</td>
+        <td style="font-size:11px">WMS Receiving + QC + System Config</td>
+        <td><span style="color:var(--dan);font-weight:700">-6</span></td>
+        <td><span class="cb cb-add">人员交接</span></td>
+      </tr>
+      <tr class="hl">
+        <td><span style="color:var(--g500)">—（无）</span></td>
+        <td>—</td>
+        <td>—</td>
+        <td style="text-align:center;font-size:18px;color:var(--suc)">★</td>
+        <td><strong>Jason / Wesley</strong></td>
+        <td>36</td>
+        <td style="font-size:11px">WMS Adv.Picking + Package</td>
+        <td><span style="color:var(--pur);font-weight:700">+36</span></td>
+        <td><span class="cb cb-add">新增BA</span></td>
+      </tr>
+      <tr>
+        <td><strong>Gus / Levent</strong></td>
+        <td>16</td>
+        <td style="font-size:11px">WMS Inventory + Kit</td>
+        <td style="text-align:center;font-size:18px;color:var(--suc)">↔</td>
+        <td><strong>Gus / Levent</strong></td>
+        <td>16</td>
+        <td style="font-size:11px">WMS Inventory + Kit（不变）</td>
+        <td><span style="color:var(--g500);font-weight:700">0</span></td>
+        <td><span class="cb cb-s">稳定</span></td>
+      </tr>
+      <tr>
+        <td><strong>Levent / ZhongLiang</strong></td>
+        <td>40</td>
+        <td style="font-size:11px">WES（全部）</td>
+        <td style="text-align:center;font-size:18px;color:var(--suc)">↔</td>
+        <td><strong>Levent / ZhongLiang</strong></td>
+        <td>40</td>
+        <td style="font-size:11px">WES（全部，不变）</td>
+        <td><span style="color:var(--g500);font-weight:700">0</span></td>
+        <td><span class="cb cb-s">稳定</span></td>
+      </tr>
+      <tr class="hl">
+        <td><strong>Eddie</strong></td>
+        <td>40</td>
+        <td style="font-size:11px">LMS全部（含劳动管理）+ YMS</td>
+        <td style="text-align:center;font-size:18px;color:var(--dan)">↓</td>
+        <td><strong>Charles</strong></td>
+        <td>24</td>
+        <td style="font-size:11px">APS（劳动绩效，从LMS拆出）</td>
+        <td><span style="color:var(--dan);font-weight:700">-16</span></td>
+        <td><span class="cb cb-add">人员交接+模块拆分</span></td>
+      </tr>
+      <tr class="hl">
+        <td><span style="color:var(--g500)">Eddie（同上）</span></td>
+        <td>—</td>
+        <td style="font-size:11px">YMS（全部）</td>
+        <td style="text-align:center;font-size:18px;color:var(--dan)">↓</td>
+        <td><strong>Liuwei / Wangshuo</strong></td>
+        <td>40</td>
+        <td style="font-size:11px">YMS（联合负责，Liuwei新加入）</td>
+        <td><span style="color:var(--suc);font-weight:700">联合升级</span></td>
+        <td><span class="cb cb-add">人员交接+联合</span></td>
+      </tr>
+      <tr class="hl">
+        <td><strong>BA Name</strong>（占位符）</td>
+        <td>~19</td>
+        <td style="font-size:11px">System（用户/配置/导入导出/Portal）</td>
+        <td style="text-align:center;font-size:18px;color:var(--dan)">↓</td>
+        <td><strong>Lipeijia</strong></td>
+        <td>17</td>
+        <td style="font-size:11px">LMS Gamification/Integration/Compliance + System User/Portal</td>
+        <td><span style="color:var(--g500);font-weight:700">-2</span></td>
+        <td><span class="cb cb-add">人员落实</span></td>
+      </tr>
+      <tr class="hl">
+        <td><strong>BA Name</strong>（占位符）</td>
+        <td>14</td>
+        <td style="font-size:11px">Reporting / BI</td>
+        <td style="text-align:center;font-size:18px;color:var(--dan)">↓</td>
+        <td><strong>Weinan / Wesley</strong></td>
+        <td>15</td>
+        <td style="font-size:11px">Reporting / BI（不变，BA落实）</td>
+        <td><span style="color:var(--suc);font-weight:700">+1</span></td>
+        <td><span class="cb cb-add">人员落实</span></td>
+      </tr>
+      <tr>
+        <td><strong>Wesley</strong></td>
+        <td>0</td>
+        <td style="font-size:11px">—（新增模块）</td>
+        <td style="text-align:center;font-size:18px;color:var(--suc)">★</td>
+        <td><strong>Wesley</strong></td>
+        <td>18</td>
+        <td style="font-size:11px">RMS + Cyclelution（新立项）</td>
+        <td><span style="color:var(--pur);font-weight:700">+18</span></td>
+        <td><span class="cb cb-add">新增模块</span></td>
+      </tr>
+      <tr>
+        <td><strong>Matthew</strong></td>
+        <td>0</td>
+        <td style="font-size:11px">—（新增模块）</td>
+        <td style="text-align:center;font-size:18px;color:var(--suc)">★</td>
+        <td><strong>Matthew</strong></td>
+        <td>14</td>
+        <td style="font-size:11px">AI-WMS（新立项）</td>
+        <td><span style="color:var(--pur);font-weight:700">+14</span></td>
+        <td><span class="cb cb-add">新增模块</span></td>
+      </tr>
+      <tr style="background:var(--g50);font-weight:700">
+        <td>合计</td><td><b>~229</b></td><td>8位BA（含占位符）</td>
+        <td></td>
+        <td>合计</td><td><b>~355</b></td><td>11位真实BA</td>
+        <td><span style="color:var(--suc);font-weight:700">+126</span></td>
+        <td>+3位新BA</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="margin-top:20px" class="g3">
+  <div class="card" style="border-top:3px solid var(--dan)">
+    <div style="font-size:13px;font-weight:700;color:var(--dan);margin-bottom:10px">🔄 人员交接（4处）</div>
+    <ul style="padding-left:16px;font-size:13px;color:var(--g700);display:flex;flex-direction:column;gap:7px">
+      <li><b>YanJun → Yuyang</b><br><span style="font-size:11px;color:var(--g500)">WMS Receiving/QC，55→49条</span></li>
+      <li><b>Eddie → Charles</b><br><span style="font-size:11px;color:var(--g500)">LMS劳动管理→APS，40→24条（含模块拆分）</span></li>
+      <li><b>Eddie → Wangshuo</b><br><span style="font-size:11px;color:var(--g500)">YMS，升级为Liuwei/Wangshuo联合</span></li>
+      <li><b>BA Name → Lipeijia + Weinan</b><br><span style="font-size:11px;color:var(--g500)">占位符落实为真实BA，分别负责LMS/System和Reporting</span></li>
+    </ul>
+  </div>
+  <div class="card" style="border-top:3px solid var(--suc)">
+    <div style="font-size:13px;font-weight:700;color:var(--suc);margin-bottom:10px">★ 新增BA（2位）</div>
+    <ul style="padding-left:16px;font-size:13px;color:var(--g700);display:flex;flex-direction:column;gap:7px">
+      <li><b>Jason / Wesley</b><br><span style="font-size:11px;color:var(--g500)">WMS Advanced Picking+Package，36条（占全部282条的13%），新接管，当前进度8%</span></li>
+      <li><b>Weinan / Wesley</b><br><span style="font-size:11px;color:var(--g500)">Reporting/BI，15条（占5%），从"BA Name"占位符落实为真实BA</span></li>
+      <li style="list-style:none;margin-top:4px;padding:8px 10px;background:var(--g50);border-radius:6px;font-size:11px;color:var(--g500)">
+        📌 <b>Wesley</b>（老员工）持续负责 RMS+Cyclelution 新立项模块（18条），Wangshuo 接管 YMS 属人员交接非新增
+      </li>
+    </ul>
+  </div>
+  <div class="card" style="border-top:3px solid var(--pur)">
+    <div style="font-size:13px;font-weight:700;color:var(--pur);margin-bottom:10px">📦 模块结构变化</div>
+    <ul style="padding-left:16px;font-size:13px;color:var(--g700);display:flex;flex-direction:column;gap:7px">
+      <li><b>LMS 内部功能 → 独立为 APS</b><br><span style="font-size:11px;color:var(--g500)">年初 LMS 模块中的劳动绩效管理功能（Real-Time Labor Tracking、Performance Standards、Workforce Planning、Travel Path Optimization、Labor Cost、KPI Dashboards），Sep版独立命名为 <b>APS（劳动绩效系统）</b>，共28条（占10%）；原 LMS 保留 Gamification、Integration、Compliance 共12条（占4%）</span></li>
+      <li><b>WMS Advanced Picking 独立</b><br><span style="font-size:11px;color:var(--g500)">从WMS通用负责人 → Jason/Wesley 专责，32条+Package 4条=36条（占13%）</span></li>
+      <li><b>新增系统：RMS + Cyclelution + AI-WMS</b><br><span style="font-size:11px;color:var(--g500)">共32条新需求（占11%），Wesley负责RMS+Cyclelution，Matthew负责AI-WMS</span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="ftr">
+  WMS开发蓝图进展对比报告 2026 &nbsp;·&nbsp; Feb Blueprint vs Sep Update（最新精确版）&nbsp;·&nbsp; 生成：2026-09-30 &nbsp;·&nbsp; 数据来源：2026 WMS Development Blueprint
+</div>
+
+<script>
+function sw(btn,id){
+  document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tc').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+</script>
+</body>
+</html>
