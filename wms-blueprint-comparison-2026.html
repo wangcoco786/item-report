@@ -187,10 +187,73 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
 
 <!-- WMS子模块 -->
 <div id="ta" class="tc active">
-<div class="g2">
-  <div class="card">
-    <div style="font-size:14px;font-weight:700;margin-bottom:14px">📦 WMS各子模块进度</div>
-    <table class="t">
+
+<style>
+.sys-card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);border:1px solid var(--g200);overflow:hidden;margin-bottom:14px}
+.sys-hdr{padding:14px 18px;cursor:pointer;display:flex;align-items:center;gap:12px;user-select:none;transition:background .15s}
+.sys-hdr:hover{background:var(--g50)}
+.sys-hdr .sys-name{font-size:15px;font-weight:700;flex:1}
+.sys-hdr .sys-meta{display:flex;gap:16px;align-items:center;flex-shrink:0}
+.sys-hdr .meta-item{font-size:11px;color:var(--g500)}
+.sys-hdr .meta-item b{color:var(--g700)}
+.sys-hdr .sys-rate{font-size:13px;font-weight:800;min-width:40px;text-align:right}
+.sys-hdr .chevron{font-size:11px;color:var(--g300);transition:transform .2s;margin-left:6px}
+.sys-hdr.open .chevron{transform:rotate(90deg)}
+.sys-bar{height:4px;background:var(--g100)}
+.sys-bar-fill{height:4px;transition:width .4s}
+.sys-body{display:none;padding:0 18px 16px;border-top:1px solid var(--g100)}
+.sys-body.open{display:block}
+</style>
+
+<div style="font-size:14px;font-weight:700;margin-bottom:16px">📋 所有系统模块进度（点击展开明细）</div>
+
+<!-- OMS -->
+<div class="sys-card">
+  <div class="sys-hdr" onclick="toggleSys(this)">
+    <span style="font-size:18px">📋</span>
+    <span class="sys-name">OMS <span style="font-size:11px;font-weight:400;color:var(--g500)">订单管理系统</span></span>
+    <div class="sys-meta">
+      <span class="meta-item"><b>BA:</b> LiuWei/Wesley</span>
+      <span class="meta-item"><b>Dev:</b> 崔翔 Linker</span>
+      <span class="meta-item"><b>总:</b> 24条</span>
+      <span class="pill pp" style="font-size:10px">Prod 15</span>
+      <span class="pill pe" style="font-size:10px">Enh 8</span>
+    </div>
+    <span class="sys-rate" style="color:var(--suc)">96%</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="sys-bar"><div class="sys-bar-fill" style="width:96%;background:var(--suc)"></div></div>
+  <div class="sys-body">
+    <table class="t" style="margin-top:12px">
+      <thead><tr><th>子模块</th><th>总</th><th>Prod</th><th>Enh</th><th>Plan</th><th>完成率</th></tr></thead>
+      <tbody>
+        <tr><td>Distributed Order Management</td><td>14</td><td>9</td><td>5</td><td>0</td><td><span class="rb rb-hi">100%</span></td></tr>
+        <tr><td>Sterling Global Inventory</td><td>6</td><td>3</td><td>2</td><td>1</td><td><span class="rb rb-hi">83%</span></td></tr>
+        <tr><td>Logistics Management</td><td>3</td><td>2</td><td>1</td><td>0</td><td><span class="rb rb-hi">100%</span></td></tr>
+        <tr><td>Sterling Reverse Logistics</td><td>3</td><td>0</td><td>3</td><td>0</td><td><span class="rb rb-mi">100%</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- WMS -->
+<div class="sys-card">
+  <div class="sys-hdr" onclick="toggleSys(this)">
+    <span style="font-size:18px">📦</span>
+    <span class="sys-name">WMS <span style="font-size:11px;font-weight:400;color:var(--g500)">仓库管理系统</span></span>
+    <div class="sys-meta">
+      <span class="meta-item"><b>BA:</b> Yuyang/Liuwei/Gus/Jason</span>
+      <span class="meta-item"><b>Dev:</b> Quinn</span>
+      <span class="meta-item"><b>总:</b> 103条</span>
+      <span class="pill pp" style="font-size:10px">Prod 44</span>
+      <span class="pill pe" style="font-size:10px">Enh 11</span>
+    </div>
+    <span class="sys-rate" style="color:var(--war)">53%</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="sys-bar"><div class="sys-bar-fill" style="width:53%;background:var(--war)"></div></div>
+  <div class="sys-body">
+    <table class="t" style="margin-top:12px">
       <thead><tr><th>子模块</th><th>BA</th><th>总</th><th>Prod</th><th>Enh</th><th>Plan</th><th>完成率</th></tr></thead>
       <tbody>
         <tr><td>Receiving Module</td><td style="font-size:11px">Yuyang/Wesley</td><td>23</td><td>16</td><td>3</td><td>4</td><td><span class="rb rb-hi">83%</span></td></tr>
@@ -202,31 +265,323 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Micr
         <tr><td>Package Management</td><td style="font-size:11px">Jason/Wesley</td><td>4</td><td>0</td><td>0</td><td>4</td><td><span class="rb rb-lo">0%</span></td></tr>
       </tbody>
     </table>
-    <div style="margin-top:10px;padding:9px 12px;background:#fff7ed;border-radius:7px;font-size:12px;color:#c2410c">
-      ⚠ Advanced Picking（Jason/Wesley）9%进度，32条中29条仍Planned，是WMS内最大风险点
-    </div>
-  </div>
-  <div class="card">
-    <div style="font-size:14px;font-weight:700;margin-bottom:14px">🏭 YMS子模块进度（Sep版大幅更新）</div>
-    <table class="t">
-      <thead><tr><th>子模块</th><th>总</th><th>Prod</th><th>Enh</th><th>New</th><th>状态</th></tr></thead>
-      <tbody>
-        <tr class="hl"><td><b>Gate Management</b></td><td>5</td><td><span class="pill pp">5</span></td><td>0</td><td>0</td><td><span class="rb rb-hi">100%</span></td></tr>
-        <tr class="hl"><td><b>Dock Door Management</b></td><td>5</td><td><span class="pill pp">4</span></td><td><span class="pill pe">1</span></td><td>0</td><td><span class="rb rb-hi">100%</span></td></tr>
-        <tr><td>Appointment Scheduling</td><td>4</td><td><span class="pill pp">2</span></td><td><span class="pill pe">1</span></td><td><span class="pill pw">1</span></td><td><span class="rb rb-mi">75%</span></td></tr>
-        <tr><td>Integration Module</td><td>4</td><td><span class="pill pp">2</span></td><td><span class="pill pe">1</span></td><td><span class="pill pw">1</span></td><td><span class="rb rb-mi">75%</span></td></tr>
-        <tr><td>Mobile &amp; Driver Mgmt</td><td>4</td><td><span class="pill pp">2</span></td><td>0</td><td><span class="pill pw">2</span></td><td><span class="rb rb-mi">50%</span></td></tr>
-        <tr><td>Yard Inventory</td><td>5</td><td>0</td><td>0</td><td><span class="pill pw">5</span></td><td><span class="rb rb-nw">立项中</span></td></tr>
-        <tr><td>Yard Analytics</td><td>5</td><td>0</td><td><span class="pill pe">1</span></td><td><span class="pill pw">4</span></td><td><span class="rb rb-nw">立项中</span></td></tr>
-        <tr><td>Asset Tracking</td><td>4</td><td>0</td><td>0</td><td><span class="pill pw">4</span></td><td><span class="rb rb-nw">立项中</span></td></tr>
-        <tr><td>Yard Optimization</td><td>4</td><td>0</td><td>0</td><td><span class="pill pw">4</span></td><td><span class="rb rb-nw">立项中</span></td></tr>
-      </tbody>
-    </table>
-    <div style="margin-top:10px;padding:9px 12px;background:var(--suc-l);border-radius:7px;font-size:12px;color:var(--suc)">
-      ✅ Gate+Dock全部Production，Q3已实质交付！Yard系列模块进入New（开始立项），产品范围扩展中
-    </div>
+    <div style="margin-top:8px;padding:8px 10px;background:#fff7ed;border-radius:6px;font-size:11px;color:#c2410c">⚠ Advanced Picking 9%，32条中29条仍Planned，是WMS最大风险</div>
   </div>
 </div>
+
+<!-- WES -->
+<div class="sys-card">
+  <div class="sys-hdr" onclick="toggleSys(this)">
+    <span style="font-size:18px">⚙️</span>
+    <span class="sys-name">WES <span style="font-size:11px;font-weight:400;color:var(--g500)">仓库执行系统</span></span>
+    <div class="sys-meta">
+      <span class="meta-item"><b>BA:</b> Levent/ZhongLiang</span>
+      <span class="meta-item"><b>Dev:</b> Leyo</span>
+      <span class="meta-item"><b>总:</b> 40条</span>
+      <span class="pill pp" style="font-size:10px">Prod 12</span>
+      <span class="pill pn" style="font-size:10px">Plan 28</span>
+    </div>
+    <span class="sys-rate" style="color:var(--war)">30%</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="sys-bar"><div class="sys-bar-fill" style="width:30%;background:var(--war)"></div></div>
+  <div class="sys-body">
+    <table class="t" style="margin-top:12px">
+      <thead><tr><th>子模块</th><th>总</th><th>Prod</th><th>Plan</th><th>完成率</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td>Workload Balancing</td><td>4</td><td>3</td><td>1</td><td><span class="rb rb-hi">75%</span></td></tr>
+        <tr class="hl"><td>Task Prioritization</td><td>4</td><td>3</td><td>1</td><td><span class="rb rb-hi">75%</span></td></tr>
+        <tr class="hl"><td>Order Orchestration</td><td>4</td><td>1</td><td>3</td><td><span class="rb rb-mi">25%</span></td></tr>
+        <tr class="hl"><td>Automation Control</td><td>7</td><td>3</td><td>4</td><td><span class="rb rb-mi">43%</span></td></tr>
+        <tr class="hl"><td>Automated Routing</td><td>4</td><td>1</td><td>3</td><td><span class="rb rb-mi">25%</span></td></tr>
+        <tr><td>Real-Time Dashboards</td><td>4</td><td>0</td><td>4</td><td><span class="rb rb-lo">0%</span></td></tr>
+        <tr><td>Labor & Equipment Opt.</td><td>4</td><td>0</td><td>4</td><td><span class="rb rb-lo">0%</span></td></tr>
+        <tr><td>Exception Handling</td><td>4</td><td>0</td><td>4</td><td><span class="rb rb-lo">0%</span></td></tr>
+        <tr><td>Integration Module</td><td>4</td><td>1</td><td>3</td><td><span class="rb rb-mi">25%</span></td></tr>
+        <tr><td>Wave Processing</td><td>4</td><td>0</td><td>4</td><td><span class="rb rb-lo">0%</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:8px;padding:8px 10px;background:var(--suc-l);border-radius:6px;font-size:11px;color:var(--suc)">✅ 较Feb版8%大幅提升至30%，Workload Balancing和Task Prioritization进展最快</div>
+  </div>
+</div>
+
+<!-- YMS -->
+<div class="sys-card">
+  <div class="sys-hdr" onclick="toggleSys(this)">
+    <span style="font-size:18px">🏭</span>
+    <span class="sys-name">YMS <span style="font-size:11px;font-weight:400;color:var(--g500)">院场管理系统</span></span>
+    <div class="sys-meta">
+      <span class="meta-item"><b>BA:</b> Liuwei/Wangshuo</span>
+      <span class="meta-item"><b>Dev:</b> Yabin</span>
+      <span class="meta-item"><b>总:</b> 40条</span>
+      <span class="pill pp" style="font-size:10px">Prod 15</span>
+      <span class="pill pw" style="font-size:10px">New 21</span>
+    </div>
+    <span class="sys-rate" style="color:var(--suc)">48% 🎉</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="sys-bar"><div class="sys-bar-fill" style="width:48%;background:var(--suc)"></div></div>
+  <div class="sys-body">
+    <table class="t" style="margin-top:12px">
+      <thead><tr><th>子模块</th><th>总</th><th>Prod</th><th>Enh</th><th>New</th><th>完成率</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td><b>Gate Management</b></td><td>5</td><td>5</td><td>0</td><td>0</td><td><span class="rb rb-hi">100%</span></td></tr>
+        <tr class="hl"><td><b>Dock Door Management</b></td><td>5</td><td>4</td><td>1</td><td>0</td><td><span class="rb rb-hi">100%</span></td></tr>
+        <tr><td>Appointment Scheduling</td><td>4</td><td>2</td><td>1</td><td>1</td><td><span class="rb rb-hi">75%</span></td></tr>
+        <tr><td>Integration Module</td><td>4</td><td>2</td><td>1</td><td>1</td><td><span class="rb rb-hi">75%</span></td></tr>
+        <tr><td>Mobile &amp; Driver Mgmt</td><td>4</td><td>2</td><td>0</td><td>2</td><td><span class="rb rb-mi">50%</span></td></tr>
+        <tr><td>Yard Inventory</td><td>5</td><td>0</td><td>0</td><td>5</td><td><span class="rb rb-nw">立项中</span></td></tr>
+        <tr><td>Yard Analytics</td><td>5</td><td>0</td><td>1</td><td>4</td><td><span class="rb rb-nw">立项中</span></td></tr>
+        <tr><td>Asset Tracking</td><td>4</td><td>0</td><td>0</td><td>4</td><td><span class="rb rb-nw">立项中</span></td></tr>
+        <tr><td>Yard Optimization</td><td>4</td><td>0</td><td>0</td><td>4</td><td><span class="rb rb-nw">立项中</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:8px;padding:8px 10px;background:var(--suc-l);border-radius:6px;font-size:11px;color:var(--suc)">✅ Feb版0% → 现48%，Gate/Dock全部上线，Q3实质交付DIEV/LinkW/Chefman项目</div>
+  </div>
+</div>
+
+<!-- APS -->
+<div class="sys-card">
+  <div class="sys-hdr" onclick="toggleSys(this)">
+    <span style="font-size:18px">👷</span>
+    <span class="sys-name">APS <span style="font-size:11px;font-weight:400;color:var(--g500)">劳动绩效系统（原LMS劳动管理模块独立）</span></span>
+    <div class="sys-meta">
+      <span class="meta-item"><b>BA:</b> Charles</span>
+      <span class="meta-item"><b>Dev:</b> Yabin</span>
+      <span class="meta-item"><b>总:</b> 24条</span>
+      <span class="pill pp" style="font-size:10px">Prod 5</span>
+      <span class="pill pe" style="font-size:10px">Enh 7</span>
+    </div>
+    <span class="sys-rate" style="color:var(--war)">50%</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="sys-bar"><div class="sys-bar-fill" style="width:50%;background:var(--war)"></div></div>
+  <div class="sys-body">
+    <table class="t" style="margin-top:12px">
+      <thead><tr><th>子模块</th><th>总</th><th>Prod</th><th>Enh</th><th>Plan</th><th>完成率</th></tr></thead>
+      <tbody>
+        <tr><td>Real-Time Labor Tracking</td><td>4</td><td>0</td><td>3</td><td>1</td><td><span class="rb rb-mi">75%</span></td></tr>
+        <tr><td>Performance Standards</td><td>4</td><td>0</td><td>2</td><td>2</td><td><span class="rb rb-mi">50%</span></td></tr>
+        <tr><td>Workforce Planning &amp; Scheduling</td><td>4</td><td>4</td><td>0</td><td>0</td><td><span class="rb rb-hi">100%</span></td></tr>
+        <tr><td>Travel Path Optimization</td><td>4</td><td>0</td><td>0</td><td>4</td><td><span class="rb rb-lo">0%</span></td></tr>
+        <tr><td>Labor Cost Management</td><td>4</td><td>0</td><td>0</td><td>4</td><td><span class="rb rb-lo">0%</span></td></tr>
+        <tr><td>KPI Dashboards</td><td>4</td><td>1</td><td>3</td><td>0</td><td><span class="rb rb-hi">100%</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:8px;padding:8px 10px;background:#e0f2fe;border-radius:6px;font-size:11px;color:#0369a1">ℹ️ Eddie→Charles新人员交接，Workforce Planning 4条全部Production</div>
+  </div>
+</div>
+
+<!-- LMS -->
+<div class="sys-card">
+  <div class="sys-hdr" onclick="toggleSys(this)">
+    <span style="font-size:18px">🎮</span>
+    <span class="sys-name">LMS <span style="font-size:11px;font-weight:400;color:var(--g500)">员工激励合规系统</span></span>
+    <div class="sys-meta">
+      <span class="meta-item"><b>BA:</b> Lipeijia</span>
+      <span class="meta-item"><b>Dev:</b> Yabin</span>
+      <span class="meta-item"><b>总:</b> 12条</span>
+      <span class="pill pp" style="font-size:10px">Prod 5</span>
+      <span class="pill pw" style="font-size:10px">New 3</span>
+    </div>
+    <span class="sys-rate" style="color:var(--war)">42%</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="sys-bar"><div class="sys-bar-fill" style="width:42%;background:var(--war)"></div></div>
+  <div class="sys-body">
+    <table class="t" style="margin-top:12px">
+      <thead><tr><th>子模块</th><th>总</th><th>Prod</th><th>Plan</th><th>New</th><th>完成率</th></tr></thead>
+      <tbody>
+        <tr><td>Gamification &amp; Engagement</td><td>4</td><td>0</td><td>4</td><td>0</td><td><span class="rb rb-lo">0%</span></td></tr>
+        <tr><td>Integration Module</td><td>4</td><td>3</td><td>0</td><td>1</td><td><span class="rb rb-hi">75%</span></td></tr>
+        <tr><td>Compliance Monitoring</td><td>4</td><td>2</td><td>0</td><td>2</td><td><span class="rb rb-mi">50%</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Integration -->
+<div class="sys-card">
+  <div class="sys-hdr" onclick="toggleSys(this)">
+    <span style="font-size:18px">🔗</span>
+    <span class="sys-name">Integration <span style="font-size:11px;font-weight:400;color:var(--g500)">系统集成</span></span>
+    <div class="sys-meta">
+      <span class="meta-item"><b>BA:</b> LiuWei/Wesley</span>
+      <span class="meta-item"><b>Dev:</b> 崔翔 Linker</span>
+      <span class="meta-item"><b>总:</b> 18条</span>
+      <span class="pill pp" style="font-size:10px">Prod 15</span>
+      <span class="pill pe" style="font-size:10px">Enh 3</span>
+    </div>
+    <span class="sys-rate" style="color:var(--suc)">100%</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="sys-bar"><div class="sys-bar-fill" style="width:100%;background:var(--suc)"></div></div>
+  <div class="sys-body">
+    <table class="t" style="margin-top:12px">
+      <thead><tr><th>子模块</th><th>总</th><th>Prod</th><th>Enh</th><th>完成率</th></tr></thead>
+      <tbody>
+        <tr><td>EDI Integration</td><td>8</td><td>7</td><td>1</td><td><span class="rb rb-hi">100%</span></td></tr>
+        <tr><td>API Integration</td><td>5</td><td>5</td><td>0</td><td><span class="rb rb-hi">100%</span></td></tr>
+        <tr><td>Platform Integration</td><td>5</td><td>3</td><td>2</td><td><span class="rb rb-hi">100%</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:8px;padding:8px 10px;background:var(--suc-l);border-radius:6px;font-size:11px;color:var(--suc)">✅ 全部完成！EDI/API/Platform全部Production，基础连通性就绪</div>
+  </div>
+</div>
+
+<!-- System -->
+<div class="sys-card">
+  <div class="sys-hdr" onclick="toggleSys(this)">
+    <span style="font-size:18px">⚙️</span>
+    <span class="sys-name">System <span style="font-size:11px;font-weight:400;color:var(--g500)">系统基础配置</span></span>
+    <div class="sys-meta">
+      <span class="meta-item"><b>BA:</b> Lipeijia / Yuyang</span>
+      <span class="meta-item"><b>Dev:</b> Yabin / Quinn</span>
+      <span class="meta-item"><b>总:</b> 20条</span>
+      <span class="pill pp" style="font-size:10px">Prod 6</span>
+      <span class="pill pe" style="font-size:10px">Enh 9</span>
+    </div>
+    <span class="sys-rate" style="color:var(--suc)">75%</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="sys-bar"><div class="sys-bar-fill" style="width:75%;background:var(--suc)"></div></div>
+  <div class="sys-body">
+    <table class="t" style="margin-top:12px">
+      <thead><tr><th>子模块</th><th>BA</th><th>总</th><th>Prod</th><th>Enh</th><th>Plan</th><th>完成率</th></tr></thead>
+      <tbody>
+        <tr><td>User Management</td><td style="font-size:11px">Lipeijia</td><td>5</td><td>5</td><td>0</td><td>0</td><td><span class="rb rb-hi">100%</span></td></tr>
+        <tr><td>System Configuration</td><td style="font-size:11px">Yuyang/Liu Wei</td><td>5</td><td>0</td><td>2</td><td>3</td><td><span class="rb rb-mi">40%</span></td></tr>
+        <tr><td>Data Import/Export</td><td style="font-size:11px">Yuyang/Liu Wei</td><td>6</td><td>1</td><td>5</td><td>0</td><td><span class="rb rb-hi">100%</span></td></tr>
+        <tr><td>Portal Management</td><td style="font-size:11px">Yuyang/Liu Wei</td><td>4</td><td>0</td><td>3</td><td>1</td><td><span class="rb rb-mi">75%</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Reporting -->
+<div class="sys-card">
+  <div class="sys-hdr" onclick="toggleSys(this)">
+    <span style="font-size:18px">📈</span>
+    <span class="sys-name">Reporting <span style="font-size:11px;font-weight:400;color:var(--g500)">报表与BI分析</span></span>
+    <div class="sys-meta">
+      <span class="meta-item"><b>BA:</b> Weinan/Wesley</span>
+      <span class="meta-item"><b>Dev:</b> Eric BI</span>
+      <span class="meta-item"><b>总:</b> 15条</span>
+      <span class="pill pp" style="font-size:10px">Prod 7</span>
+      <span class="pill pn" style="font-size:10px">Plan 8</span>
+    </div>
+    <span class="sys-rate" style="color:var(--war)">47%</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="sys-bar"><div class="sys-bar-fill" style="width:47%;background:var(--war)"></div></div>
+  <div class="sys-body">
+    <table class="t" style="margin-top:12px">
+      <thead><tr><th>子模块</th><th>总</th><th>Prod</th><th>Plan</th><th>完成率</th></tr></thead>
+      <tbody>
+        <tr><td>Inventory Reporting</td><td>5</td><td>1</td><td>4</td><td><span class="rb rb-lo">20%</span></td></tr>
+        <tr><td>Operations Reporting</td><td>5</td><td>4</td><td>1</td><td><span class="rb rb-hi">80%</span></td></tr>
+        <tr><td>Performance Analytics</td><td>5</td><td>3</td><td>2</td><td><span class="rb rb-mi">60%</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:8px;padding:8px 10px;background:#fff7ed;border-radius:6px;font-size:11px;color:#c2410c">⚠ Q3 Reporting 8条仍Planned，Operations核心报表已上线</div>
+  </div>
+</div>
+
+<!-- RMS -->
+<div class="sys-card">
+  <div class="sys-hdr" onclick="toggleSys(this)">
+    <span style="font-size:18px">↩️</span>
+    <span class="sys-name">RMS <span style="font-size:11px;font-weight:400;color:var(--g500)">退换货管理系统</span></span>
+    <div class="sys-meta">
+      <span class="meta-item"><b>BA:</b> Wesley</span>
+      <span class="meta-item"><b>Dev:</b> Quinn</span>
+      <span class="meta-item"><b>总:</b> 10条</span>
+      <span class="pill pw" style="font-size:10px">New 10</span>
+    </div>
+    <span class="sys-rate" style="color:var(--pur)">新立项</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="sys-bar"><div class="sys-bar-fill" style="width:5%;background:var(--pur)"></div></div>
+  <div class="sys-body">
+    <table class="t" style="margin-top:12px">
+      <thead><tr><th>功能</th><th>状态</th></tr></thead>
+      <tbody>
+        <tr><td>Returns Authorization</td><td><span class="pill pw">New</span></td></tr>
+        <tr><td>Return Tracking / Refurbishment / Disposition</td><td><span class="pill pw">New</span></td></tr>
+        <tr><td>Customer Portal / Label Generation</td><td><span class="pill pw">New</span></td></tr>
+        <tr><td>RTV Processing / Analytics / Quality Inspection / Credit Processing</td><td><span class="pill pw">New</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:8px;padding:8px 10px;background:var(--pur-l);border-radius:6px;font-size:11px;color:var(--pur)">🚀 Q3新立项，10条全部New状态，Q4开始开发</div>
+  </div>
+</div>
+
+<!-- Cyclelution -->
+<div class="sys-card">
+  <div class="sys-hdr" onclick="toggleSys(this)">
+    <span style="font-size:18px">♻️</span>
+    <span class="sys-name">Cyclelution <span style="font-size:11px;font-weight:400;color:var(--g500)">电子废弃物回收系统</span></span>
+    <div class="sys-meta">
+      <span class="meta-item"><b>BA:</b> Wesley</span>
+      <span class="meta-item"><b>Dev:</b> Quinn</span>
+      <span class="meta-item"><b>总:</b> 8条</span>
+      <span class="pill pw" style="font-size:10px">New 8</span>
+    </div>
+    <span class="sys-rate" style="color:var(--pur)">新立项</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="sys-bar"><div class="sys-bar-fill" style="width:5%;background:var(--pur)"></div></div>
+  <div class="sys-body">
+    <table class="t" style="margin-top:12px">
+      <thead><tr><th>功能</th><th>状态</th></tr></thead>
+      <tbody>
+        <tr><td>Electronics Intake / Data Sanitization / Component Tracking</td><td><span class="pill pw">New</span></td></tr>
+        <tr><td>Compliance Reporting / Certification Management</td><td><span class="pill pw">New</span></td></tr>
+        <tr><td>Asset Valuation / Hazmat Handling / Audit Trail</td><td><span class="pill pw">New</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:8px;padding:8px 10px;background:var(--pur-l);border-radius:6px;font-size:11px;color:var(--pur)">🚀 Q4新立项，环保合规+资产回收，8条全部New</div>
+  </div>
+</div>
+
+<!-- AI-WMS -->
+<div class="sys-card">
+  <div class="sys-hdr" onclick="toggleSys(this)">
+    <span style="font-size:18px">🤖</span>
+    <span class="sys-name">AI-WMS <span style="font-size:11px;font-weight:400;color:var(--g500)">智能仓储系统</span></span>
+    <div class="sys-meta">
+      <span class="meta-item"><b>BA:</b> Matthew</span>
+      <span class="meta-item"><b>Dev:</b> Quinn + 任展 AI</span>
+      <span class="meta-item"><b>总:</b> 14条</span>
+      <span class="pill pw" style="font-size:10px">New 14</span>
+    </div>
+    <span class="sys-rate" style="color:var(--pur)">新立项</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="sys-bar"><div class="sys-bar-fill" style="width:5%;background:var(--pur)"></div></div>
+  <div class="sys-body">
+    <table class="t" style="margin-top:12px">
+      <thead><tr><th>功能</th><th>复杂度</th><th>状态</th></tr></thead>
+      <tbody>
+        <tr><td>AI Wave Planning Agent / AI Labor Planning Agent</td><td>Very High</td><td><span class="pill pw">New · P1</span></td></tr>
+        <tr><td>Warehouse Copilot / AI Agent WMS Operator</td><td>Very High</td><td><span class="pill pw">New · P1</span></td></tr>
+        <tr><td>AI Slotting / Pick Path / Inventory Forecasting</td><td>Very High</td><td><span class="pill pw">New · P2</span></td></tr>
+        <tr><td>Computer Vision / Voice AI / AI Yard Optimization</td><td>Very High</td><td><span class="pill pw">New · P2</span></td></tr>
+        <tr><td>Digital Twin / AI Exception Detection / Industry Vertical</td><td>Very High</td><td><span class="pill pw">New · P2</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:8px;padding:8px 10px;background:var(--pur-l);border-radius:6px;font-size:11px;color:var(--pur)">🤖 全部Very High复杂度，Q3立项，Q4开发。Copilot/Agent已标记P1优先级</div>
+  </div>
+</div>
+
+<script>
+function toggleSys(hdr) {
+  hdr.classList.toggle('open');
+  const body = hdr.closest('.sys-card').querySelector('.sys-body');
+  body.classList.toggle('open');
+}
+</script>
+
 </div>
 
 <!-- 开发团队 -->
