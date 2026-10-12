@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>IDC & Linker Weekly Ticket Report · Oct 1–10, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+    background: #fff; color: #1f2430; font-size: 13px; line-height: 1.6;
+    padding: 32px 40px;
+  }
+
+  /* ── Cover / Header ── */
+  .cover {
+    border-bottom: 3px solid #3b5bdb;
+    padding-bottom: 20px; margin-bottom: 28px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .cover-left h1 { font-size: 20px; font-weight: 800; color: #1a2b6b; }
+  .cover-left h1 span { font-size: 14px; font-weight: 400; color: #6b7280; display: block; margin-top: 3px; }
+  .cover-right { text-align: right; font-size: 12px; color: #6b7280; line-height: 1.9; }
+  .cover-right b { color: #1f2430; }
+
+  /* ── Summary cards ── */
+  .cards { display: flex; gap: 16px; margin-bottom: 28px; }
+  .card {
+    flex: 1; border-radius: 10px; padding: 14px 18px;
+    border: 1px solid #e5e7eb; background: #f8f9fb;
+  }
+  .card .num { font-size: 28px; font-weight: 800; }
+  .card .lbl { font-size: 12px; color: #6b7280; margin-top: 3px; }
+  .card .sub { font-size: 11px; color: #9aa1ac; margin-top: 2px; }
+  .card.blue   { border-left: 4px solid #3b5bdb; }
+  .card.teal   { border-left: 4px solid #0c8599; }
+  .card.dark   { border-left: 4px solid #1a2b6b; }
+
+  /* ── Section heading ── */
+  .sec-hdr {
+    font-size: 13px; font-weight: 800; color: #fff;
+    background: #3b5bdb; padding: 6px 14px; border-radius: 6px;
+    margin: 24px 0 10px; display: flex; justify-content: space-between; align-items: center;
+  }
+  .sec-hdr.teal { background: #0c8599; }
+
+  /* ── Tables ── */
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-bottom: 6px; }
+  th {
+    background: #3b5bdb; color: #fff;
+    padding: 7px 10px; text-align: left; font-size: 12px; white-space: nowrap;
+  }
+  th.teal { background: #0c8599; }
+  th.dark { background: #1a2b6b; }
+  td { padding: 6px 10px; border-bottom: 1px solid #e5e7eb; vertical-align: middle; }
+  tr:nth-child(even) td { background: #f8f9fb; }
+
+  /* ── Badges ── */
+  .badge {
+    display: inline-block; padding: 1px 9px; border-radius: 4px;
+    color: #fff; font-size: 11px; font-weight: 700; white-space: nowrap;
+  }
+  .badge.linker { background: #3b5bdb; }
+  .badge.idc    { background: #0c8599; }
+
+  /* ── Ticket key ── */
+  .tkey { font-family: Consolas, monospace; color: #3b5bdb; font-weight: 700; white-space: nowrap; font-size: 12px; }
+
+  /* ── Sub-section label ── */
+  .sub-lbl {
+    font-size: 12px; font-weight: 700; color: #fff;
+    padding: 3px 10px; border-radius: 4px; display: inline-block; margin: 14px 0 6px;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 28px; padding-top: 12px; border-top: 1px solid #e5e7eb;
+    font-size: 11px; color: #9aa1ac; display: flex; justify-content: space-between;
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { padding: 12mm 14mm; font-size: 11px; }
+    .card { page-break-inside: avoid; }
+    .sec-hdr, th, .badge, .sub-lbl { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @page { size: A4 portrait; margin: 10mm 12mm; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════ -->
+<div class="cover">
+  <div class="cover-left">
+    <h1>IDC &amp; Linker — Completed Ticket Report
+      <span>IDC &amp; Linker 部门已完成工单周报</span>
+    </h1>
+  </div>
+  <div class="cover-right">
+    <div><b>Period / 时间范围：</b> Oct 1 – Oct 10, 2026 &nbsp;（2026年10月1日 – 10月10日）</div>
+    <div><b>Reporter / 整理人：</b> Coco Wang · PM Team</div>
+    <div><b>Date / 日期：</b> October 10, 2026 &nbsp;（2026年10月10日）</div>
+    <div><b>Confidential / 保密级别：</b> Internal Only · 仅供内部使用</div>
+  </div>
+</div>
+
+<!-- ═══════ SUMMARY CARDS ═══════ -->
+<div class="cards">
+  <div class="card blue">
+    <div class="num" style="color:#3b5bdb">4</div>
+    <div class="lbl">Linker (DTS) · Completed Tickets · 已完成工单</div>
+    <div class="sub">Small Parcel / Data Integration / OMS</div>
+  </div>
+  <div class="card teal">
+    <div class="num" style="color:#0c8599">23</div>
+    <div class="lbl">IDC (RP / TRF / APS / IOT) · Completed Tickets · 已完成工单</div>
+    <div class="sub">YMS / APS / IAM / LMS / IOT</div>
+  </div>
+  <div class="card dark">
+    <div class="num" style="color:#1a2b6b">27</div>
+    <div class="lbl">Total · 合计</div>
+    <div class="sub">Oct 1 – Oct 10, 2026</div>
+  </div>
+</div>
+
+<!-- ═══════ DEPT SUMMARY TABLE ═══════ -->
+<div class="sec-hdr">
+  <span>📊 Department Summary · 部门完成汇总</span>
+</div>
+<table style="width:380px">
+  <tr>
+    <th style="width:150px">Department / 部门</th>
+    <th style="width:110px">Project Keys / 项目</th>
+    <th style="text-align:center">Completed / 完成数</th>
+  </tr>
+  <tr>
+    <td><span class="badge linker">Linker</span></td>
+    <td>DTS</td>
+    <td style="text-align:center;font-weight:700">4</td>
+  </tr>
+  <tr>
+    <td><span class="badge idc">IDC</span></td>
+    <td>RP · TRF · APS · IOT</td>
+    <td style="text-align:center;font-weight:700">23</td>
+  </tr>
+  <tr>
+    <td colspan="2"><b>Total / 合计</b></td>
+    <td style="text-align:center;font-weight:700">27</td>
+  </tr>
+</table>
+
+<!-- ═══════ LINKER DETAIL ═══════ -->
+<div class="sec-hdr" style="margin-top:28px">
+  <span>🔷 Linker (DTS) — Ticket Detail · 工单明细</span>
+  <span style="font-size:11px;font-weight:400">4 tickets</span>
+</div>
+<table>
+  <tr>
+    <th style="width:120px">Ticket No. / 工单号</th>
+    <th>Summary / 摘要</th>
+  </tr>
+  <tr>
+    <td><span class="tkey">DTS-11519</span></td>
+    <td>[Small Parcel] BatchShip — Dangerous Goods Support &nbsp;<span style="color:#6b7280;font-size:11.5px">批量发货新增危险品支持</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">DTS-11443</span></td>
+    <td>ByteDance — Flow 错误预警增强 &nbsp;<span style="color:#6b7280;font-size:11.5px">Add flow error alerting for ByteDance</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">DTS-11500</span></td>
+    <td>MC0686 – Inventory Quantity Mismatch: Shopify ↔ WISE (THE OUAI) &nbsp;<span style="color:#6b7280;font-size:11.5px">Shopify与WISE库存数量不一致修复</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">DTS-11480</span></td>
+    <td>[DI v3] Python 3.8 EOL 升级 &nbsp;<span style="color:#6b7280;font-size:11.5px">Upgrade from deprecated Python 3.8</span></td>
+  </tr>
+</table>
+
+<!-- ═══════ IDC DETAIL ═══════ -->
+<div class="sec-hdr teal" style="margin-top:28px">
+  <span>🟦 IDC — Ticket Detail · 工单明细</span>
+  <span style="font-size:11px;font-weight:400">23 tickets</span>
+</div>
+
+<!-- YMS / TRF -->
+<span class="sub-lbl" style="background:#0c8599">YMS / TRF — Yard Management System 院场管理</span>
+<table>
+  <tr>
+    <th class="teal" style="width:120px">Ticket No.</th>
+    <th class="teal">Summary / 摘要</th>
+  </tr>
+  <tr>
+    <td><span class="tkey">TRF-5763</span></td>
+    <td>Provide APS API to Query Equipment List &nbsp;<span style="color:#6b7280;font-size:11.5px">提供APS查询设备列表接口</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">TRF-6444</span></td>
+    <td>BE — Add SP-97 &nbsp;<span style="color:#6b7280;font-size:11.5px">后端新增SP-97逻辑</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">TRF-6445</span></td>
+    <td>Android — Add Related Logic &nbsp;<span style="color:#6b7280;font-size:11.5px">Android端新增相关逻辑</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">TRF-6446</span></td>
+    <td>iOS — Add Related Logic &nbsp;<span style="color:#6b7280;font-size:11.5px">iOS端新增相关逻辑</span></td>
+  </tr>
+</table>
+
+<!-- APS -->
+<span class="sub-lbl" style="background:#3b5bdb">APS — Labor Planning &amp; Scheduling 人员调度</span>
+<table>
+  <tr>
+    <th style="width:120px">Ticket No.</th>
+    <th>Summary / 摘要</th>
+  </tr>
+  <tr>
+    <td><span class="tkey">APS-1621</span></td>
+    <td>HC Summary Report &nbsp;<span style="color:#6b7280;font-size:11.5px">人头数汇总报表（后端）</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">APS-1618</span></td>
+    <td>FE — HC Summary Report &nbsp;<span style="color:#6b7280;font-size:11.5px">人头数汇总报表（前端）</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">APS-1614</span></td>
+    <td>Labor Planning Summary — Persistence Solution &nbsp;<span style="color:#6b7280;font-size:11.5px">劳动力规划汇总持久化方案</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">APS-1514</span></td>
+    <td>Borrow Staff Request + Approval Center &nbsp;<span style="color:#6b7280;font-size:11.5px">借人申请与审批中心</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">APS-1634</span></td>
+    <td>Borrow Staff — Fix Incorrect Remaining Headcount in Modal &nbsp;<span style="color:#6b7280;font-size:11.5px">借人弹窗剩余可借人数显示不正确修复</span></td>
+  </tr>
+</table>
+
+<!-- IAM / RP -->
+<span class="sub-lbl" style="background:#6741d9">IAM / LMS / Recruit (RP) — Identity &amp; HR Systems 身份与HR</span>
+<table>
+  <tr>
+    <th style="width:120px">Ticket No.</th>
+    <th>Summary / 摘要</th>
+  </tr>
+  <tr>
+    <td><span class="tkey">RP-1406</span></td>
+    <td>IAM Staging — SBFH Search Not Found &nbsp;<span style="color:#6b7280;font-size:11.5px">IAM Staging环境SBFH搜索不到问题修复</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">RP-1409</span></td>
+    <td>LMS — Add Agency Company &nbsp;<span style="color:#6b7280;font-size:11.5px">LMS新增Agency公司</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">RP-1249</span></td>
+    <td>LMS — Paylocity API Key Expiry Reminder &nbsp;<span style="color:#6b7280;font-size:11.5px">LMS同步Paylocity API Key到期提醒</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">RP-1294</span></td>
+    <td>Recruit Multi-tenant — BOSS Zhipin Resume Sync Integration PRD &nbsp;<span style="color:#6b7280;font-size:11.5px">Recruit多租户BOSS直聘简历同步对接PRD</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">RP-1307</span></td>
+    <td>IAM — Add API to Retrieve All Tenant Info &nbsp;<span style="color:#6b7280;font-size:11.5px">IAM对外接口增加获取所有租户信息接口</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">RP-1392</span></td>
+    <td>Support — IAM: Backfill Missing Tenants &nbsp;<span style="color:#6b7280;font-size:11.5px">IAM侧补齐缺失租户</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">RP-1413</span></td>
+    <td>User "stefanrelpla" — Page Freezes on Edit &nbsp;<span style="color:#6b7280;font-size:11.5px">用户点击编辑后页面卡死修复</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">RP-1204</span></td>
+    <td>[IAM / Central] Build Point Agent &nbsp;<span style="color:#6b7280;font-size:11.5px">构建 Point Agent</span></td>
+  </tr>
+</table>
+
+<!-- IOT -->
+<span class="sub-lbl" style="background:#e8590c">IOT — Asset Management 资产管理</span>
+<table>
+  <tr>
+    <th style="width:120px">Ticket No.</th>
+    <th>Summary / 摘要</th>
+  </tr>
+  <tr>
+    <td><span class="tkey">IOT-514</span></td>
+    <td>Asset Ledger — List View &amp; Management &nbsp;<span style="color:#6b7280;font-size:11.5px">资产台账列表查看与管理</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">IOT-515</span></td>
+    <td>Add New Asset (with Map Pin Selection) &nbsp;<span style="color:#6b7280;font-size:11.5px">新增资产（含地图选点）</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">IOT-516</span></td>
+    <td>Asset Detail View &amp; Status Management &nbsp;<span style="color:#6b7280;font-size:11.5px">资产详情查看与状态维护</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">IOT-517</span></td>
+    <td>Bind Device to Asset &nbsp;<span style="color:#6b7280;font-size:11.5px">设备绑定到资产</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">IOT-518</span></td>
+    <td>Unbind Device from Asset &nbsp;<span style="color:#6b7280;font-size:11.5px">设备从资产解绑</span></td>
+  </tr>
+  <tr>
+    <td><span class="tkey">IOT-525</span></td>
+    <td>Basic Device Ledger Management &nbsp;<span style="color:#6b7280;font-size:11.5px">Basic Device台账管理</span></td>
+  </tr>
+</table>
+
+<!-- ═══════ FOOTER ═══════ -->
+<div class="footer">
+  <span>IDC &amp; Linker Weekly Report · Oct 1–10, 2026 · Confidential / 保密</span>
+  <span>Reporter: Coco Wang · PM Team &nbsp;|&nbsp; Generated: 2026-10-10</span>
+</div>
+
+</body>
+</html>
